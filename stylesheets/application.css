@@ -1,0 +1,31 @@
+/* deep-sky-blue = #09BAFB
+midnight-blue = #143760
+silver = #C2B9B1
+dim-gray = #4F4243
+slate-gray = #626973 */
+
+/* color: #09BAFB
+color: #143760
+color: #C2B9B1
+color: #4F4243
+background-color: #626973 */
+
+body {
+  background-image: url("../images/denverunionstation.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 26px;
+  background-color: #143760;
+}
+
+header h1 {
+  text-align: center;
+  background-color: #626973;
+  color: #09BAFB;
+  font-weight: 700;
+  font-size: 50px;
+  padding: 20px;
+}
