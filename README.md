@@ -1,4 +1,5 @@
 ## Introduction
+See the deployed version here: https://hbellows.github.io/rainOrShine-fe/
 ## Initial Setup
 ## How to Use
 ## Known Issues
