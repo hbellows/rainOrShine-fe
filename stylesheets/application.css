@@ -21,15 +21,6 @@ body {
   background-color: #143760;
 }
 
-header h1 {
-  text-align: center;
-  background-color: #626973;
-  color: #09BAFB;
-  font-weight: 700;
-  font-size: 50px;
-  padding: 20px;
-}
-
 .container {
   display: grid;
   grid-template-columns: 15% 85%;
@@ -76,6 +67,35 @@ header h1 {
 
 #search-img {
   width: 20px;
+}
+
+.text-input {
+  width: 93%;
+  display: inline-block;
+  font-size: 1em;
+  padding: 5px;
+  background-color: rgba(37,40,43,0.0);
+  color: #c0c0c0;
+  border: none;
+  border-bottom: 1px solid #c0c0c0;
+  border-radius: 1px;
+}
+
+.form-btn {
+  display: inline-block;
+  font-size: 1em;
+  width: auto;
+  min-width: 5%;
+  background-color: rgba(15, 169, 240, 0.555);
+  border: 0;
+  padding: 5px;
+  border-radius: 10px;
+  color: #c0c0c0;
+}
+
+.form-btn:hover {
+  background-color: rgba(15, 169, 240, 0.986);
+  color: #111111;
 }
 
 #current-summary {
