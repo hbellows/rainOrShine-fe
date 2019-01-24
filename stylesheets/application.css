@@ -30,6 +30,18 @@ header h1 {
   padding: 20px;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: stretch;
+}
+
+.sidebar {
+  background-color: rgba(37,40,43,0.9);
+  padding-top: 20px;
+  box-shadow: inset -5px 0 15px rgba(0,0,0,0.6);
+}
+
 .main {
   padding: 10px 10px 10px 10px;
   background-color: rgba(0,0,0,0.6);
