@@ -13,17 +13,33 @@
 // 6. Removing Favorite Locations
 //  - DELETE /api/v1/favorites
 
+const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
+
 function getWeather(location) {
-  var location = 'denver,co'
-  var url = `https://rain-or-shine-1.herokuapp.com/api/v1/forecast?location=${location}`
+  var location = location
+  var url = `${productionUrl}/api/v1/forecast?location=${location}`
+  debugger
   fetch(url)
-    .then(response) => response.json())
+    .then((response) => response.json())
     .then((response) => {
       weatherData = response
       return this.displayWeatherDetails(response)
-    }):
+    });
 }
 
+$('#location-search').on('click', function() {
+  var location = $('#location').val();
+  getWeather(location);
+});
+
 function displayWeatherDetails(response) {
-  document.getElementById("current-summary").innerHTML = (response.data.attributes.current_summary)
+  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_summary)
 }
+
+
+// const fetchDiscussions = () => {
+//   fetch('/api/v1/discussions')
+//   .then((response) => response.json())
+//   .then((rawDiscussions) => cleanDiscussions(rawDiscussions))
+//   .catch((error) => console.error({ error }));
+// }
