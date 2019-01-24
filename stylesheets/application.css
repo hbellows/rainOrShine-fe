@@ -29,3 +29,105 @@ header h1 {
   font-size: 50px;
   padding: 20px;
 }
+
+.main {
+  padding: 10px 10px 10px 10px;
+  background-color: rgba(0,0,0,0.6);
+  display: inline-grid;
+  justify-content: center;
+  align-items: start;
+  grid-template-columns: 45% 45%;
+  grid-template-areas:
+    "search-bar search-bar"
+    "current-summary current-detailed"
+    "hourly hourly"
+    "daily daily";
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  border-left: 1px solid black;
+}
+
+.main-items {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(37,40,43,0.8);
+  box-shadow:  3px 10px 10px rgba(0,0,0,0.8);
+  color: #c4e2f2;
+  border: 1px solid black;
+  align-self: center;
+}
+
+#search-bar {
+  grid-area: search-bar;
+  align-self: center;
+}
+
+#search-img {
+  width: 20px;
+}
+
+#current-summary {
+  grid-area: current-summary;
+  display: none;
+}
+
+#current-detailed {
+  grid-area: current-detailed;
+  display: none;
+}
+
+#hourly {
+  grid-area: hourly;
+  display: none;
+}
+
+#daily {
+  grid-area: daily;
+  display: none;
+}
+
+.current-summary {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  justify-items: center;
+  align-content: center;
+}
+
+.current-details {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  padding: 10px;
+  align-items: center;
+}
+
+.hourly-container {
+  display: grid;
+  grid-template-areas:
+  "auto auto auto auto"
+  "auto auto auto auto"
+  "auto auto auto auto";
+  justify-content: space-around;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
+  margin-top: 15px;
+}
+
+.hourly-item {
+  text-align: center;
+}
+
+.hourly-item h1 {
+  margin: 0 0 8px 0;
+}
+
+.daily-container {
+  margin: 15px 0 15px 0;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+  grid-template-rows: auto auto auto auto auto auto auto;
+  grid-template-columns: 15% 45% 10% 10% 10%;
+  grid-template-areas:
+    "daily-day daily-status daily-precip daily-high daily-low";
+}
