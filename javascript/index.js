@@ -15,9 +15,8 @@
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 
-function getWeather(location) {
-  var location = location
-  var url = `${productionUrl}/api/v1/forecast?location=${location}`
+const getWeather = (location) => {
+  let url = `${productionUrl}/api/v1/forecast?location=${location}`
   fetch(url)
   .then((response) => response.json())
   .then((res) => {
@@ -34,5 +33,5 @@ $('#location-search').on('click', function() {
 });
 
 function displayWeatherDetails(response) {
-  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast)
+  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
 }
