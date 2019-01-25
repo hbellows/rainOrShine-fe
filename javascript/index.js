@@ -23,7 +23,7 @@ function getWeather(location) {
   .then((response) => response.json())
   .then((res) => {
     return this.displayWeatherDetails(res)
-  .catch(error => console.log({error}))
+  // .catch(error => console.log({error}))
   });
 }
 
