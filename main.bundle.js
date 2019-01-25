@@ -44,7 +44,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	// This file is in the entry point in your webpack config.
 
@@ -61,23 +61,36 @@
 	// 6. Removing Favorite Locations
 	//  - DELETE /api/v1/favorites
 
-	function getWeather(location) {
-	  var _this = this;
+	var productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 
+	function getWeather(location) {
 	  debugger;
-	  var location = 'denver,co';
-	  var url = "https://rain-or-shine-1.herokuapp.com/api/v1/forecast?location=" + location;
+	  var location = location;
+	  var url = productionUrl + '/api/v1/forecast?location=' + location;
 	  fetch(url).then(function (response) {
 	    return response.json();
-	  }).then(function (response) {
-	    weatherData = response;
-	    return _this.displayWeatherDetails(response);
+	  }).then(function (weatherResponse) {
+	    return displayWeatherDetails(weatherResponse).catch(function (error) {
+	      return console.log({ error: error });
+	    });
 	  });
 	}
 
+	$('#location-search').on('click', function () {
+	  var location = $('#location').val();
+	  getWeather(location);
+	});
+
 	function displayWeatherDetails(response) {
-	  document.getElementById("current-summary-container").innerHTML = response.data.attributes.current_summary;
+	  document.getElementById("current-summary-container").innerHTML = response.data.attributes.current_forecast;
 	}
+
+	// const fetchDiscussions = () => {
+	//   fetch('/api/v1/discussions')
+	//   .then((response) => response.json())
+	//   .then((rawDiscussions) => cleanDiscussions(rawDiscussions))
+	//   .catch((error) => console.error({ error }));
+	// }
 
 /***/ })
 /******/ ]);

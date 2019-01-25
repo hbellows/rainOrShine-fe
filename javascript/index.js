@@ -16,15 +16,15 @@
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 
 function getWeather(location) {
+  // debugger
   var location = location
   var url = `${productionUrl}/api/v1/forecast?location=${location}`
-  debugger
   fetch(url)
-    .then((response) => response.json())
-    .then((response) => {
-      weatherData = response
-      return this.displayWeatherDetails(response)
-    });
+  .then((response) => response.json())
+  .then((res) => {
+    return this.displayWeatherDetails(res)
+  .catch(error => console.log({error}))
+  });
 }
 
 $('#location-search').on('click', function() {
@@ -33,7 +33,7 @@ $('#location-search').on('click', function() {
 });
 
 function displayWeatherDetails(response) {
-  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_summary)
+  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast)
 }
 
 
