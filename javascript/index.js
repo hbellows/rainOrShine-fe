@@ -15,12 +15,12 @@
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 
-const getWeather = (location) => {
+const getCurrentWeather = (location) => {
   let url = `${productionUrl}/api/v1/forecast?location=${location}`
   fetch(url)
   .then((response) => response.json())
   .then((res) => {
-    displayWeatherDetails(res);
+    displayCurrentWeatherSummary(res);
   })
   .catch(error => {
     console.log(error)
@@ -29,9 +29,19 @@ const getWeather = (location) => {
 
 $('#location-search').on('click', function() {
   var location = $('#location').val();
-  getWeather(location);
+  getCurrentWeather(location);
 });
 
-function displayWeatherDetails(response) {
-  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
+const displayCurrentWeatherSummary = (response) => {
+  // document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
+  $("#current-summary").html('');
+  $('#current-summary').append(`
+    <div class="summary-left">
+      <h5>
+        <span class="currently-summary">${response.data.attributes.current_forecast.time}</span>
+      </h5>
+      <h1><span id="currently-temperature">${response.data.attributes.current_forecast.temp}</span>&deg;</h1>
+    </div>
+  `);
+  $('#current-summary').css('display', 'inherit');
 }
