@@ -38,9 +38,26 @@ const displayCurrentWeatherSummary = (response) => {
   $('#current-summary').append(`
     <div class="summary-left">
       <h5>
-        <span class="currently-summary">${response.data.attributes.current_forecast.time}</span>
+        <span class="currently-location">${response.data.id}</span>
       </h5>
-      <h1><span id="currently-temperature">${response.data.attributes.current_forecast.temp}</span>&deg;</h1>
+      <h5>
+        <span id="currently-summary">${response.data.attributes.current_forecast.summary}</span>
+      </h5>
+      <h5>
+        <span class="currently-time">${response.data.attributes.current_forecast.time}</span>
+      </h5>
+      <h5>
+        <span id="currently-temperature">Now: ${response.data.attributes.current_forecast.temp}</span>&deg;
+      </h5>
+      <h5>
+        <span id="currently-apparent-temperature">Feels Like: ${response.data.attributes.current_forecast.feels_like}</span>&deg;
+      </h5>
+      <h5>
+        <span id="currently-humidity">Humdiity: ${response.data.attributes.current_forecast.humidity}%</span>
+      </h5>
+      <h5>
+        <span id="currently-uvIndex">UV Index: ${response.data.attributes.current_forecast.uv_index}</span>
+      </h5>
     </div>
   `);
   $('#current-summary').css('display', 'inherit');
