@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title>Rain or Shine</title>
-  <!-- <script src="main.bundle.js"></script> -->
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
   <link rel='stylesheet' type='text/css' href='stylesheets/reset.css'>
@@ -14,46 +13,45 @@
 </head>
 
 <body>
-
+  
   <div class="container">
     
     <div class="sidebar">
-        <h2>Favorites</h2>
-        <div id="favorites">
+      <h2>Favorites</h2>
+      <div id="favorites">
       </div>
     </div>
-
+    
     <div class="main">
-
+      
       <section id="search-bar" class="main-items">
-        <input type="text" id="location" class="text-input" placeholder="Enter location to view weather">
+        <input type="text" id="location" class="text-input" placeholder="Enter a location or zip code to view forecast">
         <button class="form-btn" id="location-search">
           <img src="./images/search.png" id="search-img" />
         </button>
       </section>
-
+      
       <section id="current-summary" class="main-items current-summary">
-        <div class="current-summary-container">
-        </div>
+        <div id="current-summary-container"></div>
       </section>
-
+      
       <section id="current-detailed" class="main-items">
-        <div class="current-detailed-container">
-        </div>
+        <div class="current-detailed-container"></div>
       </section>
-
+      
       <section id="hourly" class="main-items">
-        <div class="hourly-container">
-        </div>
+        <div class="hourly-container"></div>
       </section>
-
+      
       <section id="daily" class="main-items">
-        <div class="daily-container">
-        </div>
+        <div class="daily-container"></div>
       </section>
-
+      
     </div>
   </div>
+
+  <script src="main.bundle.js"></script>
+
 </body>
 
 </html>
