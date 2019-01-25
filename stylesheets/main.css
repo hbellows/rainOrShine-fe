@@ -33,6 +33,14 @@ body {
   box-shadow: inset -5px 0 15px rgba(0,0,0,0.6);
 }
 
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 1em;
+  color: #c4e2f2;
+  display: block;
+}
+
 .main {
   padding: 10px 10px 10px 10px;
   background-color: rgba(0,0,0,0.6);
@@ -55,7 +63,7 @@ body {
   border-radius: 10px;
   background-color: rgba(37,40,43,0.8);
   box-shadow:  3px 10px 10px rgba(0,0,0,0.8);
-  color: #c4e2f2;
+  color: #09BAFB;
   border: 1px solid black;
   align-self: center;
 }
