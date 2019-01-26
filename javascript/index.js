@@ -14,6 +14,7 @@
 // - POST /api/v1/sessions
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
+const api_key = 'abc123'
 
 const getCurrentWeather = (location) => {
   let url = `${productionUrl}/api/v1/forecast?location=${location}`
@@ -37,28 +38,18 @@ const displayCurrentWeatherSummary = (response) => {
   $("#current-summary").html('');
   $('#current-summary').append(`
     <div class="summary-left">
-      <h5>
-        <span class="currently-location">${response.data.id}</span>
-      </h5>
-      <h5>
-        <span id="currently-summary">${response.data.attributes.current_forecast.summary}</span>
-      </h5>
-      <h5>
-        <span class="currently-time">${response.data.attributes.current_forecast.time}</span>
-      </h5>
-      <h5>
-        <span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;
-      </h5>
-      <h5>
-        <span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;
-      </h5>
-      <h5>
-        <span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span>
-      </h5>
-      <h5>
-        <span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span>
-      </h5>
+      <h5><span class="currently-location">${response.data.id}</span></h5>
+      <h5><span id="currently-summary">${response.data.attributes.current_forecast.summary}</span></h5>
+      <h5><span class="currently-time">${response.data.attributes.current_forecast.time}</span></h5>
+      <h5><span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;</h5>
+      <h5><span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;</h5>
+      <h5><span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span></h5>
+      <h5><span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span></h5>
     </div>
   `);
   $('#current-summary').css('display', 'inherit');
+}
+
+const postFavorite = (location) => {
+  
 }
