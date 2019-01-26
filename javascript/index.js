@@ -47,16 +47,16 @@ const displayCurrentWeatherSummary = (response) => {
         <span class="currently-time">${response.data.attributes.current_forecast.time}</span>
       </h5>
       <h5>
-        <span id="currently-temperature">Now: ${response.data.attributes.current_forecast.temp}</span>&deg;
+        <span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;
       </h5>
       <h5>
-        <span id="currently-apparent-temperature">Feels Like: ${response.data.attributes.current_forecast.feels_like}</span>&deg;
+        <span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;
       </h5>
       <h5>
-        <span id="currently-humidity">Humdiity: ${response.data.attributes.current_forecast.humidity}%</span>
+        <span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span>
       </h5>
       <h5>
-        <span id="currently-uvIndex">UV Index: ${response.data.attributes.current_forecast.uv_index}</span>
+        <span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span>
       </h5>
     </div>
   `);
