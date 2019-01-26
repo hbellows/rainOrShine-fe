@@ -1,7 +1,7 @@
 ## Introduction
 This is a simple one page weather app.  A user can enter any combination of city, state and/or zipcode, and the applicaiton will display the current, hourly and eight day weather forecast for supplied location.
 
-This application calls to endpoints contained in this Rails backend application: https://github.com/hbellows/rain_or_shine
+Endpoints consummed by this application can be found [here](https://github.com/hbellows/rain_or_shine).
 
 ## Tech Stack List
 This project is built with JavaScript and JQuery
