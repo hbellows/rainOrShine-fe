@@ -50,6 +50,20 @@ const displayCurrentWeatherSummary = (response) => {
   $('#current-summary').css('display', 'inherit');
 }
 
+
 const postFavorite = (location) => {
-  
-}
+  fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+       "location": $("#location").val()
+     })
+   })
+    .then(response => response.json())
+    .catch(error => console.error(error))
+    getFavorites();
+   }
+
+   $("#Add").on("click", postFavorite)
+
+   
