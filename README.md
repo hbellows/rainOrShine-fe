@@ -11,7 +11,7 @@ This project is built with JavaScript and JQuery
 2. Run npm install
 3. Run npm start
 4. Navigate to localhost:8080 to use the application locally, or 
-5. See the deployed version [here] (https://hbellows.github.io/rainOrShine-fe/)
+5. See the deployed version [!here] (https://hbellows.github.io/rainOrShine-fe/)
 
 ## To Do
 1. User account creation functionality (GET /api/v1/users)
