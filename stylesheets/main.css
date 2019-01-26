@@ -18,6 +18,7 @@ body {
   background-attachment: fixed;
   font-family: 'Varela Round', sans-serif;
   font-size: 26px;
+  color: #09BAFB;
   background-color: #143760;
 }
 
@@ -31,6 +32,12 @@ body {
   background-color: rgba(37,40,43,0.9);
   padding-top: 20px;
   box-shadow: inset -5px 0 15px rgba(0,0,0,0.6);
+}
+
+.sidebar h2 {
+  font-size: 1em;
+  color: #09BAFB;
+  margin-left: 5px;
 }
 
 .main {
@@ -55,7 +62,7 @@ body {
   border-radius: 10px;
   background-color: rgba(37,40,43,0.8);
   box-shadow:  3px 10px 10px rgba(0,0,0,0.8);
-  color: #c4e2f2;
+  color: #09BAFB;
   border: 1px solid black;
   align-self: center;
 }
@@ -124,42 +131,4 @@ body {
   grid-template-columns: 40% 60%;
   justify-items: center;
   align-content: center;
-}
-
-.current-details {
-  display: grid;
-  grid-template-columns: 55% 45%;
-  padding: 10px;
-  align-items: center;
-}
-
-.hourly-container {
-  display: grid;
-  grid-template-areas:
-  "auto auto auto auto"
-  "auto auto auto auto"
-  "auto auto auto auto";
-  justify-content: space-around;
-  grid-row-gap: 30px;
-  grid-column-gap: 30px;
-  margin-top: 15px;
-}
-
-.hourly-item {
-  text-align: center;
-}
-
-.hourly-item h1 {
-  margin: 0 0 8px 0;
-}
-
-.daily-container {
-  margin: 15px 0 15px 0;
-  display: grid;
-  justify-content: space-around;
-  align-items: center;
-  grid-template-rows: auto auto auto auto auto auto auto;
-  grid-template-columns: 15% 45% 10% 10% 10%;
-  grid-template-areas:
-    "daily-day daily-status daily-precip daily-high daily-low";
 }

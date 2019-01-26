@@ -15,13 +15,12 @@
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 
-function getWeather(location) {
-  var location = location
-  var url = `${productionUrl}/api/v1/forecast?location=${location}`
+const getCurrentWeather = (location) => {
+  let url = `${productionUrl}/api/v1/forecast?location=${location}`
   fetch(url)
   .then((response) => response.json())
   .then((res) => {
-    displayWeatherDetails(res);
+    displayCurrentWeatherSummary(res);
   })
   .catch(error => {
     console.log(error)
@@ -30,9 +29,36 @@ function getWeather(location) {
 
 $('#location-search').on('click', function() {
   var location = $('#location').val();
-  getWeather(location);
+  getCurrentWeather(location);
 });
 
-function displayWeatherDetails(response) {
-  document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast)
+const displayCurrentWeatherSummary = (response) => {
+  // document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
+  $("#current-summary").html('');
+  $('#current-summary').append(`
+    <div class="summary-left">
+      <h5>
+        <span class="currently-location">${response.data.id}</span>
+      </h5>
+      <h5>
+        <span id="currently-summary">${response.data.attributes.current_forecast.summary}</span>
+      </h5>
+      <h5>
+        <span class="currently-time">${response.data.attributes.current_forecast.time}</span>
+      </h5>
+      <h5>
+        <span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;
+      </h5>
+      <h5>
+        <span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;
+      </h5>
+      <h5>
+        <span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span>
+      </h5>
+      <h5>
+        <span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span>
+      </h5>
+    </div>
+  `);
+  $('#current-summary').css('display', 'inherit');
 }
