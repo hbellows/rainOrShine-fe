@@ -16,6 +16,10 @@
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 const api_key = 'abc123'
 
+$(document).ready(() => {
+  getFavorites();
+});
+
 const getCurrentWeather = (location) => {
   let url = `${productionUrl}/api/v1/forecast?location=${location}`
   fetch(url)
@@ -50,7 +54,7 @@ const displayCurrentWeatherSummary = (response) => {
   $('#current-summary').css('display', 'inherit');
 }
 
-const getFavorite = () => {
+const getFavorites = () => {
   let url = `${productionUrl}/api/v1/favorites?api_key=${api_key}`
   fetch(url)
   .then((response) => response.json())
@@ -61,6 +65,7 @@ const getFavorite = () => {
     console.log(error)
     });
 }
+
 
 const postFavorite = (location) => {
   fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
