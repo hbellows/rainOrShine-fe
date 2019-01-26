@@ -66,7 +66,6 @@ const getFavorites = () => {
     });
 }
 
-
 const postFavorite = (location) => {
   fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
      method: 'POST',
