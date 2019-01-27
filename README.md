@@ -24,7 +24,7 @@ Simply type any combination of city, state and zipcode in the search bar and hit
 
 In addition to searching for weather forecasts, users can add and remove locations to/from their Favorites list to easily access often searched location.
 
-![Screenshot](screenshot.png)
+![Screenshot](Screenshot.png)
 
 ## How to Contribute
 Currently, I am the sole contributor to this project.  However, suggestions for improvements can be submitted by forking a copy of this repository and submitting a pull request.
