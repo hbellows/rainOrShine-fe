@@ -22,11 +22,34 @@ body {
   background-color: #143760;
 }
 
+h1 {
+  color: rgb(0, 133, 194);
+  font-size: 1.5em;
+}
+
+h2 {
+  color: rgb(0, 133, 194);
+  font-size: 1em;
+}
+
+h3 {
+  color: rgba(78, 217, 241, 0.836);
+  font-size: 0.8em;
+  margin: 20px 8px 8px 8px;
+}
+
+h4 {
+  font-size: 0.6em;
+}
+
+/* ----Main Container---- */
 .container {
   display: grid;
   grid-template-columns: 15% 85%;
   align-items: stretch;
 }
+
+/* ----Sidebar---- */
 
 .sidebar {
   background-color: rgba(37,40,43,0.9);
@@ -40,6 +63,12 @@ body {
   margin-left: 5px;
 }
 
+#favorites a {
+  display: inline;
+  padding: 6px 0 6px 0;
+}
+
+/* ----Main---- */
 .main {
   padding: 10px 10px 10px 10px;
   background-color: rgba(0,0,0,0.6);
@@ -49,7 +78,7 @@ body {
   grid-template-columns: 45% 45%;
   grid-template-areas:
     "search-bar search-bar"
-    "current-summary current-detailed"
+    "current-summary current-details"
     "hourly hourly"
     "daily daily";
   grid-column-gap: 30px;
@@ -65,15 +94,6 @@ body {
   color: #09BAFB;
   border: 1px solid black;
   align-self: center;
-}
-
-#search-bar {
-  grid-area: search-bar;
-  align-self: center;
-}
-
-#search-img {
-  width: 20px;
 }
 
 .text-input {
@@ -105,13 +125,59 @@ body {
   color: #111111;
 }
 
+#search-bar {
+  grid-area: search-bar;
+  align-self: center;
+}
+
+#search-img {
+  width: 20px;
+}
+
+/* ----Weather Grids---- */
+.current-summary {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  justify-items: center;
+  align-content: center;
+}
+
+.hourly-container {
+  display: grid;
+  grid-template-areas:
+  "auto auto auto auto"
+  "auto auto auto auto"
+  "auto auto auto auto";
+  justify-content: space-around;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
+  margin-top: 15px;
+}
+
+.summary-left {
+  text-align: center;
+}
+
+.details-left {
+  justify-self: center;
+}
+
+.details-right {
+  justify-self: center;
+}
+
+.hourly-item {
+  text-align: center;
+}
+
 #current-summary {
   grid-area: current-summary;
   display: none;
 }
 
-#current-detailed {
-  grid-area: current-detailed;
+#current-details {
+  grid-area: current-details;
   display: none;
 }
 
@@ -123,12 +189,4 @@ body {
 #daily {
   grid-area: daily;
   display: none;
-}
-
-.current-summary {
-  padding: 20px;
-  display: grid;
-  grid-template-columns: 40% 60%;
-  justify-items: center;
-  align-content: center;
 }

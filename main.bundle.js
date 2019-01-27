@@ -42,9 +42,15 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _forecast = __webpack_require__(1);
+
+	var _forecast2 = _interopRequireDefault(_forecast);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// This file is in the entry point in your webpack config.
 
@@ -62,14 +68,35 @@
 	// - POST /api/v1/sessions
 
 	var productionUrl = 'https://rain-or-shine-1.herokuapp.com';
+	var api_key = 'abc123';
+
+	var forecast = void 0;
+	var weatherIcons = {
+	  'clear-day': 'wi-day-sunny',
+	  'clear-night': 'wi-night-clear',
+	  'rain': 'wi-showers',
+	  'snow': 'wi-snow',
+	  'sleet': 'wi-sleet',
+	  'wind': 'wi-windy',
+	  'fog': 'wi-fog',
+	  'cloudy': 'wi-cloudy',
+	  'partly-cloudy-day': 'wi-day-cloudy',
+	  'partly-cloudy-night': 'wi-night-cloudy'
+	};
+
+	$(document).ready(function () {
+	  getFavorites();
+	});
 
 	var getCurrentWeather = function getCurrentWeather(location) {
 	  var url = productionUrl + '/api/v1/forecast?location=' + location;
 	  fetch(url).then(function (response) {
 	    return response.json();
-	  }).then(function (res) {
-	    displayCurrentWeatherSummary(res);
-	  }).catch(function (error) {
+	  }).then(function (data) {
+	    return forecast = new _forecast2.default(data);
+	  }).then(displayCurrentWeather).then(displayHourlyWeather)
+	  // .then(displayDailyWeather)
+	  .catch(function (error) {
 	    console.log(error);
 	  });
 	};
@@ -79,12 +106,163 @@
 	  getCurrentWeather(location);
 	});
 
-	var displayCurrentWeatherSummary = function displayCurrentWeatherSummary(response) {
-	  // document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
+	var displayCurrentWeather = function displayCurrentWeather() {
 	  $("#current-summary").html('');
-	  $('#current-summary').append('\n    <div class="summary-left">\n      <h5>\n        <span class="currently-location">' + response.data.id + '</span>\n      </h5>\n      <h5>\n        <span id="currently-summary">' + response.data.attributes.current_forecast.summary + '</span>\n      </h5>\n      <h5>\n        <span class="currently-time">' + response.data.attributes.current_forecast.time + '</span>\n      </h5>\n      <h5>\n        <span id="currently-temperature">Now ' + response.data.attributes.current_forecast.temp + '</span>&deg;\n      </h5>\n      <h5>\n        <span id="currently-apparent-temperature">Feels Like ' + response.data.attributes.current_forecast.feels_like + '</span>&deg;\n      </h5>\n      <h5>\n        <span id="currently-humidity">Humdiity ' + response.data.attributes.current_forecast.humidity + '%</span>\n      </h5>\n      <h5>\n        <span id="currently-uvIndex">UV Index ' + response.data.attributes.current_forecast.uv_index + '</span>\n      </h5>\n    </div>\n  ');
-	  $('#current-summary').css('display', 'inherit');
+	  $('#current-summary').append('\n    <div class="summary-left">\n      <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n      <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n    </div>\n      \n      <div class="summary-right">\n      <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n      <h2>\n        <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n        <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n      </h2>\n    </div>\n  ');
+
+	  $("#current-details").html('');
+	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h5><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h5>\n        <h5><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h5>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h5><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h5>\n       </div>\n\n      <div class"details-right">\n        <h5><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h5>\n        <h5><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h5>\n        <h5><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h5>\n      </div>\n    </div>\n  ');
+	  $('#current-summary, #current-details').css('display', 'inherit');
 	};
+
+	var displayHourlyWeather = function displayHourlyWeather() {
+	  $("#hourly-container").html('');
+	  forecast.hourlyForecast().forEach(function (weather) {
+	    debugger;
+	    $('#hourly-container').append('\n      <div class=\'hourly-forecast\'>\n        <h4 id="time">' + weather.time_short + '</h4>\n        <h4 id="summary">' + weather.summary + '</h4>\n      </div>\n    ');
+	  });
+	};
+
+	var getFavorites = function getFavorites() {
+	  var url = productionUrl + '/api/v1/favorites?api_key=' + api_key;
+	  fetch(url).then(function (response) {
+	    return response.json();
+	  }).then(function (res) {
+	    displayFavorites(res);
+	  }).catch(function (error) {
+	    console.log(error);
+	  });
+	};
+
+	var displayFavorites = function displayFavorites(response) {
+	  $("#favorites").html('');
+
+	  var favorites = response.data;
+
+	  favorites.forEach(function (location) {
+	    $('#favorites').append('\n      <h3 id="favorite">' + location.meta.data.id + '</h3>\n    ');
+	  });
+	};
+
+	var postFavorite = function postFavorite(location) {
+	  fetch(productionUrl + '/api/v1/favorites?api_key=' + api_key, {
+	    method: 'POST',
+	    headers: { 'Content-Type': 'application/json' },
+	    body: JSON.stringify({
+	      "location": $("#location").val()
+	    })
+	  }).then(function (response) {
+	    return response.json();
+	  }).catch(function (error) {
+	    return console.error(error);
+	  });
+	  getFavorites();
+	};
+
+	var deleteFavorite = function deleteFavorite(location) {
+	  var favoriteData = new formData();
+	  favoriteData.append('location', location);
+	  favoriteData.append('api_key', api_key);
+	  fetch(productionUrl + '/api/v1/favorites', {
+	    method: 'DELETE',
+	    headers: { 'Content-Type': 'application/json' },
+	    body: JSON.stringify(favoriteData)
+	  }).then(function (response) {
+	    return response.json();
+	  }).catch(function (error) {
+	    return console.error(error);
+	  });
+	  getFavorites();
+	};
+
+	// --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
+	// The FormData interface provides a way to easily construct 
+	// a set of key/value pairs representing form fields and their values
+
+	// new formData()
+
+	// FormData.append()
+	// Appends a new value onto an existing key inside 
+	// a FormData object, or adds the key if it does not already exist.
+
+	// --------------
+
+	{/* <div class='favorite-btn'>
+	   <div id='add-favortie'>
+	     <button class='add-btn' onclick="postFavorite()">Add</button>
+	   </div>
+	    <div id='remove-favorite' >
+	     <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
+	   </div>
+	  </div>
+	  #remove-favorite {
+	   display: none;
+	  }
+	  $(document).ready(function() {
+	   $('#add-favorite, #remove-favorite').click(function() {
+	     $('#add-favorite').toggle()
+	     $('#remove-favorite').toggle()
+	   })
+	  }) */}
+
+	function newFunction() {
+	  return null;
+	}
+
+	function newFunction() {
+	  $(document).ready(function () {
+	    getFavorites();
+	  });
+	}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Forecast = function () {
+	  function Forecast(data) {
+	    _classCallCheck(this, Forecast);
+
+	    this.weather_data = data;
+	  }
+
+	  _createClass(Forecast, [{
+	    key: "currentLocation",
+	    value: function currentLocation() {
+	      return this.weather_data.data.id;
+	    }
+	  }, {
+	    key: "currentForecast",
+	    value: function currentForecast() {
+	      return this.weather_data.data.attributes.current_forecast;
+	    }
+	  }, {
+	    key: "hourlyForecast",
+	    value: function hourlyForecast() {
+	      return this.weather_data.data.attributes.hourly_forecast.slice(0, 12);
+	    }
+	  }, {
+	    key: "dailyForecast",
+	    value: function dailyForecast() {
+	      return this.weather_data.data.attributes.daily_forecast;
+	    }
+	  }]);
+
+	  return Forecast;
+	}();
+
+	exports.default = Forecast;
+	;
 
 /***/ })
 /******/ ]);
