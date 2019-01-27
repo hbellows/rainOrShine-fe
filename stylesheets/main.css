@@ -28,6 +28,7 @@ h1 {
 }
 
 h2 {
+  color: rgb(0, 133, 194);
   font-size: 1em;
 }
 
@@ -152,6 +153,22 @@ h4 {
   grid-row-gap: 30px;
   grid-column-gap: 30px;
   margin-top: 15px;
+}
+
+.summary-left {
+  text-align: center;
+}
+
+.details-left {
+  justify-self: center;
+}
+
+.details-right {
+  justify-self: center;
+}
+
+.hourly-item {
+  text-align: center;
 }
 
 #current-summary {

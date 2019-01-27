@@ -17,6 +17,10 @@ const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 const api_key = 'abc123';
 import Forecast from './forecast.js';
 let forecast;
+const displayWeather = () => {
+  displayCurrentWeather()
+  displayHourlyWeather()
+ }
 const weatherIcons = {
   'clear-day': 'wi-day-sunny',
   'clear-night': 'wi-night-clear',
@@ -41,9 +45,7 @@ const getCurrentWeather = (location) => {
   .then(data => {
     return forecast = new Forecast(data);
   })
-  .then(displayCurrentWeather)
-  .then(displayHourlyWeather)
-  // .then(displayDailyWeather)
+  .then(displayWeather)
   .catch(error => {
     console.log(error)
   });
@@ -92,18 +94,19 @@ const displayCurrentWeather = () => {
 }
 
 const displayHourlyWeather = () => {
-  $("#hourly-container").html('');
+  $(".hourly-container").html('');
   
   forecast.hourlyForecast().forEach(function(weather) {
-    $('#hourly-container').append(`
-      <div class='hourly-forecast'>
-        <h4 id="time">${weather.time_short}</h4>
-        <h4 id="summary">${weather.summary}</h4>
+    
+    $('.hourly-container').append(`
+      <div class='hourly-item'>
+        <h4>${weather.time_short}</h4>
+        <h4>${weather.summary}</h4>
       </div>
     `)
   })
+  $('#hourly').css('display', 'inherit');
 };
-
 
 const getFavorites = () => {
   let url = `${productionUrl}/api/v1/favorites?api_key=${api_key}`
@@ -188,13 +191,3 @@ $(document).ready(function() {
     $('#remove-favorite').toggle()
   })
 }) */}
-
-function newFunction() {
-  return null;
-}
-
-function newFunction() {
-  $(document).ready(() => {
-    getFavorites();
-  });
-}

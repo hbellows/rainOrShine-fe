@@ -42,13 +42,15 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _forecast = __webpack_require__(1);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _forecast2 = _interopRequireDefault(_forecast);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// This file is in the entry point in your webpack config.
 
@@ -67,6 +69,8 @@
 
 	var productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 	var api_key = 'abc123';
+
+	var forecast = void 0;
 	var weatherIcons = {
 	  'clear-day': 'wi-day-sunny',
 	  'clear-night': 'wi-night-clear',
@@ -84,44 +88,12 @@
 	  getFavorites();
 	});
 
-	var WeatherData = function () {
-	  function WeatherData(data) {
-	    _classCallCheck(this, WeatherData);
-
-	    this.weather_data = data;
-	  }
-
-	  _createClass(WeatherData, [{
-	    key: 'currentLocation',
-	    value: function currentLocation() {
-	      return this.weather_data.data.id;
-	    }
-	  }, {
-	    key: 'currentForecast',
-	    value: function currentForecast() {
-	      return this.weather_data.data.attributes.current_forecast;
-	    }
-	  }, {
-	    key: 'hourlyForecast',
-	    value: function hourlyForecast() {
-	      return this.weather_data.data.attributes.hourly_forecast.slice(0, 11);
-	    }
-	  }, {
-	    key: 'dailyForecast',
-	    value: function dailyForecast() {
-	      return this.weather_data.data.attributes.daily_forecast;
-	    }
-	  }]);
-
-	  return WeatherData;
-	}();
-
 	var getCurrentWeather = function getCurrentWeather(location) {
 	  var url = productionUrl + '/api/v1/forecast?location=' + location;
 	  fetch(url).then(function (response) {
 	    return response.json();
 	  }).then(function (data) {
-	    return weather = new WeatherData(data);
+	    return forecast = new _forecast2.default(data);
 	  }).then(displayCurrentWeather).then(displayHourlyWeather)
 	  // .then(displayDailyWeather)
 	  .catch(function (error) {
@@ -136,17 +108,17 @@
 
 	var displayCurrentWeather = function displayCurrentWeather() {
 	  $("#current-summary").html('');
-	  $('#current-summary').append('\n    <div class="summary-left">\n      <h2><span class="currently-location">' + weather.currentLocation() + '</span></h2>\n      <h2><span class="currently-time">' + weather.currentForecast().time_long + '</span></h2>\n    </div>\n      \n      <div class="summary-right">\n      <h2><span id="currently-temperature">Now ' + weather.currentForecast().temp + '</span>&deg;</h2>\n      <h2>\n        <span id="currently-temperature">Low ' + weather.dailyForecast()[0].low + '</span>&deg;\n        <span id="currently-temperature">High ' + weather.dailyForecast()[0].high + '</span>&deg;\n      </h2>\n    </div>\n  ');
+	  $('#current-summary').append('\n    <div class="summary-left">\n      <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n      <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n    </div>\n      \n      <div class="summary-right">\n      <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n      <h2>\n        <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n        <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n      </h2>\n    </div>\n  ');
 
 	  $("#current-details").html('');
-	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h5><span id="currently-Sunrise">Sunrise ' + weather.dailyForecast()[0].sunrise + '</span></h5>\n        <h5><span id="currently-Sunset">Sunset ' + weather.dailyForecast()[0].sunset + '</span></h5>\n        <i id="wi ' + weatherIcons[weather.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h5><span id="currently-summary">' + weather.dailyForecast()[0].summary + '</span></h5>\n       </div>\n\n      <div class"details-right">\n        <h5><span id="currently-apparent-temperature">Feels Like ' + weather.currentForecast().feels_like + '</span>&deg;</h5>\n        <h5><span id="currently-humidity">Humdiity ' + weather.currentForecast().humidity + '%</span></h5>\n        <h5><span id="currently-uvIndex">UV Index ' + weather.currentForecast().uv_index + '</span></h5>\n      </div>\n    </div>\n  ');
+	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h5><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h5>\n        <h5><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h5>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h5><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h5>\n       </div>\n\n      <div class"details-right">\n        <h5><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h5>\n        <h5><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h5>\n        <h5><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h5>\n      </div>\n    </div>\n  ');
 	  $('#current-summary, #current-details').css('display', 'inherit');
 	};
 
 	var displayHourlyWeather = function displayHourlyWeather() {
 	  $("#hourly-container").html('');
-
-	  weather.hourlyForecast().forEach(function (weather) {
+	  forecast.hourlyForecast().forEach(function (weather) {
+	    debugger;
 	    $('#hourly-container').append('\n      <div class=\'hourly-forecast\'>\n        <h4 id="time">' + weather.time_short + '</h4>\n        <h4 id="summary">' + weather.summary + '</h4>\n      </div>\n    ');
 	  });
 	};
@@ -232,6 +204,65 @@
 	     $('#remove-favorite').toggle()
 	   })
 	  }) */}
+
+	function newFunction() {
+	  return null;
+	}
+
+	function newFunction() {
+	  $(document).ready(function () {
+	    getFavorites();
+	  });
+	}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Forecast = function () {
+	  function Forecast(data) {
+	    _classCallCheck(this, Forecast);
+
+	    this.weather_data = data;
+	  }
+
+	  _createClass(Forecast, [{
+	    key: "currentLocation",
+	    value: function currentLocation() {
+	      return this.weather_data.data.id;
+	    }
+	  }, {
+	    key: "currentForecast",
+	    value: function currentForecast() {
+	      return this.weather_data.data.attributes.current_forecast;
+	    }
+	  }, {
+	    key: "hourlyForecast",
+	    value: function hourlyForecast() {
+	      return this.weather_data.data.attributes.hourly_forecast.slice(0, 12);
+	    }
+	  }, {
+	    key: "dailyForecast",
+	    value: function dailyForecast() {
+	      return this.weather_data.data.attributes.daily_forecast;
+	    }
+	  }]);
+
+	  return Forecast;
+	}();
+
+	exports.default = Forecast;
+	;
 
 /***/ })
 /******/ ]);
