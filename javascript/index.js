@@ -66,6 +66,24 @@ const getFavorites = () => {
     });
 }
 
+const displayFavorites = (response) => {
+  $("#favorites").html('');
+  
+  let favorites = response.data
+  
+  favorites.forEach(function(location) {
+    $('#favorites').append(`
+    <h3><span id="favorite">${location.meta.data.id}</span></h3>
+    `)
+  });
+}
+
+// serial.forEach(function(val, i) {
+//   var el = $('<div class="n' + i + '"></div>').html(val);
+//   $('.elements').append('<div class="n' + i + '"></div>');
+//   $('.elements .n' + i).html(val);
+// })
+
 const postFavorite = (location) => {
   fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
      method: 'POST',
@@ -79,5 +97,24 @@ const postFavorite = (location) => {
     getFavorites();
 }
 
-$("#Add").on("click", postFavorite)
-   
+
+{/* <div class='favorite-btn'>
+  <div id='add-favortie'>
+    <button class='add-btn' onclick="postFavorite()">Add</button>
+  </div>
+
+  <div id='remove-favorite' >
+    <button class='remove-btn' onclick="deleteFavorite()">Remove</button>
+  </div>
+</div>
+
+#remove-favorite {
+  display: none;
+}
+
+$(document).ready(function() {
+  $('#add-favorite, #remove-favorite').click(function() {
+    $('#add-favorite').toggle()
+    $('#remove-favorite').toggle()
+  })
+}) */}
