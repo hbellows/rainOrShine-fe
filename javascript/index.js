@@ -146,15 +146,15 @@ const displayHourlyWeather = () => {
 }
 
 const displayDailyWeather = () => {
-  $(".daily-container").html('')
-
+  $("#daily").html('')
   forecast.dailyForecast().forEach(function(weather) {
-    $('.daily-container').append(`
-      <div>
-        <h5 class="daily-day">${weather.day}</h5>
-        <h5 class="dayily-low">${weather.low}</h5>
-        <h5 class="daily-high">${weather.high}</h5>
-        <h5 class="daily-summary">${weather.summary}</h5>
+    $('#daily').append(`
+      <div class="daily-container">
+        <h7 class="daily-day">${weather.day}</h7>
+        <h7 class="daily-summary">${weather.summary}</h7>
+        <h7 class="daily-precip">${weather.precip_prob}%</h7>
+        <h7 class="daily-low">Low ${weather.low}&deg;</h7>
+        <h7 class="daily-high">High ${weather.high}&deg;</h7>
       </div>
     `)
   })
