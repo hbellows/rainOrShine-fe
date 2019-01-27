@@ -115,16 +115,16 @@ const displayCurrentWeather = () => {
   $('#current-details').append(`
     <div class="details">
       <div class="details-left>
-        <h5><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h5>
-        <h5><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h5>
+        <h2><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h2>
+        <h2><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h2>
         <i id="wi ${weatherIcons[forecast.dailyForecast()[0].icon]} wi-fw"></i> 
-        <h5><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h5>
+        <h2><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h2>
        </div>
 
       <div class"details-right">
-        <h5><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h5>
-        <h5><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h5>
-        <h5><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h5>
+        <h2><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h2>
+        <h2><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h2>
+        <h2><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h2>
       </div>
     </div>
   `);
