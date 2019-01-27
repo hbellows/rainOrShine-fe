@@ -15,27 +15,58 @@
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
 const api_key = 'abc123'
+const weatherIcons = {
+  'clear-day': 'wi-day-sunny',
+  'clear-night': 'wi-night-clear',
+  'rain': 'wi-showers',
+  'snow': 'wi-snow',
+  'sleet': 'wi-sleet',
+  'wind': 'wi-windy',
+  'fog': 'wi-fog',
+  'cloudy': 'wi-cloudy',
+  'partly-cloudy-day': 'wi-day-cloudy',
+  'partly-cloudy-night': 'wi-night-cloudy'
+}
 
 $(document).ready(() => {
   getFavorites();
 });
 
+class WeatherData {
+  constructor(data) {
+    this.weather_data = data;
+  }
+
+  currentLocation() {
+    return this.weather_data.data.id;
+  }
+
+  currentForecast() {
+    return this.weather_data.data.attributes.current_forecast;
+  }
+
+  hourlyForecast() {
+    return this.weather_data.data.attributes.hourly_forecast.slice(0, 11);
+  }
+
+  dailyForecast() {
+    return this.weather_data.data.attributes.daily_forecast;
+  }
+}
+
 const getCurrentWeather = (location) => {
   let url = `${productionUrl}/api/v1/forecast?location=${location}`
   fetch(url)
   .then((response) => response.json())
-  .then((res) => {
-    displayCurrentWeatherSummary(res);
+  .then(data => {
+    return weather = new WeatherData(data);
   })
-  // .then((res) => {
-  //   displayHourlyWeather(res);
-  // })
-  // .then((res) => {
-  //   displayDailyWeather(res);
-  // })
+  .then(displayCurrentWeather)
+  .then(displayHourlyWeather)
+  // .then(displayDailyWeather)
   .catch(error => {
     console.log(error)
-    });
+  });
 };
 
 $('#location-search').on('click', function() {
@@ -43,21 +74,20 @@ $('#location-search').on('click', function() {
   getCurrentWeather(location);
 });
 
-const displayCurrentWeatherSummary = (response) => {
+const displayCurrentWeather = () => {
   $("#current-summary").html('');
   $('#current-summary').append(`
     <div class="summary-left">
-      <h5><span class="currently-location">${response.data.id}</span></h5>
-      <h5><span class="currently-time">${response.data.attributes.current_forecast.time}</span></h5>
-      <h5><span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;</h5>
-      <h5>
-        <span id="currently-temperature">Low ${response.data.attributes.daily_forecast[0].low}</span>&deg;
-        <span id="currently-temperature">High ${response.data.attributes.daily_forecast[0].high}</span>&deg;
-      </h5>
+      <h2><span class="currently-location">${weather.currentLocation()}</span></h2>
+      <h2><span class="currently-time">${weather.currentForecast().time_long}</span></h2>
     </div>
-
-    <div class="summary-right">
-
+      
+      <div class="summary-right">
+      <h2><span id="currently-temperature">Now ${weather.currentForecast().temp}</span>&deg;</h2>
+      <h2>
+        <span id="currently-temperature">Low ${weather.dailyForecast()[0].low}</span>&deg;
+        <span id="currently-temperature">High ${weather.dailyForecast()[0].high}</span>&deg;
+      </h2>
     </div>
   `);
 
@@ -65,21 +95,36 @@ const displayCurrentWeatherSummary = (response) => {
   $('#current-details').append(`
     <div class="details">
       <div class="details-left>
-      <h5><span id="currently-Sunrise">Sunrise ${response.data.attributes.daily_forecast[0].sunrise}</span></h5>
-      <h5><span id="currently-Sunset">Sunset ${response.data.attributes.daily_forecast[0].sunset}</span></h5>
-        <h5><span id="currently-summary">${response.data.attributes.daily_forecast[0].summary}</span></h5>
-      </div>
+        <h5><span id="currently-Sunrise">Sunrise ${weather.dailyForecast()[0].sunrise}</span></h5>
+        <h5><span id="currently-Sunset">Sunset ${weather.dailyForecast()[0].sunset}</span></h5>
+        <i id="wi ${weatherIcons[weather.dailyForecast()[0].icon]} wi-fw"></i> 
+        <h5><span id="currently-summary">${weather.dailyForecast()[0].summary}</span></h5>
+       </div>
 
       <div class"details-right">
-        <h5><span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;</h5>
-        <h5><span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span></h5>
-        <h5><span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span></h5>
-        <h5><span id="currently-precip">${response.data.attributes.daily_forecast[0].precip_type}</span></h5>
+        <h5><span id="currently-apparent-temperature">Feels Like ${weather.currentForecast().feels_like}</span>&deg;</h5>
+        <h5><span id="currently-humidity">Humdiity ${weather.currentForecast().humidity}%</span></h5>
+        <h5><span id="currently-uvIndex">UV Index ${weather.currentForecast().uv_index}</span></h5>
       </div>
     </div>
   `);
   $('#current-summary, #current-details').css('display', 'inherit');
 }
+
+const displayHourlyWeather = () => {
+  $("#hourly-container").html('');
+  
+  weather.hourlyForecast().forEach(function(weather) {
+    $('#hourly-container').append(`
+      <div class='hourly-forecast'>
+        <h4 id="time">${weather.time_short}</h4>
+        <h4 id="summary">${weather.summary}</h4>
+      </div>
+    `)
+  })
+};
+
+
 
 const getFavorites = () => {
   let url = `${productionUrl}/api/v1/favorites?api_key=${api_key}`
@@ -90,8 +135,8 @@ const getFavorites = () => {
   })
   .catch(error => {
     console.log(error)
-    });
-}
+  });
+};
 
 const displayFavorites = (response) => {
   $("#favorites").html('');
@@ -100,7 +145,7 @@ const displayFavorites = (response) => {
   
   favorites.forEach(function(location) {
     $('#favorites').append(`
-    <h3><span id="favorite">${location.meta.data.id}</span></h3>
+      <h3 id="favorite">${location.meta.data.id}</h3>
     `)
   });
 }

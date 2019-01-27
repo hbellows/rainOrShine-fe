@@ -22,6 +22,25 @@ body {
   background-color: #143760;
 }
 
+h1 {
+  color: rgb(0, 133, 194);
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1em;
+}
+
+h3 {
+  color: rgba(78, 217, 241, 0.836);
+  font-size: 0.8em;
+  margin: 20px 8px 8px 8px;
+}
+
+h4 {
+  font-size: 0.6em;
+}
+
 /* ----Main Container---- */
 .container {
   display: grid;
@@ -121,6 +140,18 @@ body {
   grid-template-columns: 40% 60%;
   justify-items: center;
   align-content: center;
+}
+
+.hourly-container {
+  display: grid;
+  grid-template-areas:
+  "auto auto auto auto"
+  "auto auto auto auto"
+  "auto auto auto auto";
+  justify-content: space-around;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
+  margin-top: 15px;
 }
 
 #current-summary {
