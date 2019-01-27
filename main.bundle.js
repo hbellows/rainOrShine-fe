@@ -155,10 +155,9 @@
 	};
 
 	var displayDailyWeather = function displayDailyWeather() {
-	  $(".daily-container").html('');
-
+	  $("#daily").html('');
 	  forecast.dailyForecast().forEach(function (weather) {
-	    $('.daily-container').append('\n      <div>\n        <h5 class="daily-day">' + weather.day + '</h5>\n        <h5 class="dayily-low">' + weather.low + '</h5>\n        <h5 class="daily-high">' + weather.high + '</h5>\n        <h5 class="daily-summary">' + weather.summary + '</h5>\n      </div>\n    ');
+	    $('#daily').append('\n      <div class="daily-container">\n        <h7 class="daily-day">' + weather.day + '</h7>\n        <h7 class="daily-summary">' + weather.summary + '</h7>\n        <h7 class="daily-precip">' + weather.precip_prob + '%</h7>\n        <h7 class="daily-low">Low ' + weather.low + '&deg;</h7>\n        <h7 class="daily-high">High ' + weather.high + '&deg;</h7>\n      </div>\n    ');
 	  });
 	  $('#daily').css('display', 'inherit');
 	};
