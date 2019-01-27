@@ -20,6 +20,7 @@ let forecast;
 const displayWeather = () => {
   displayCurrentWeather()
   displayHourlyWeather()
+  displayDailyWeather()
  };
 const weatherIcons = {
   'clear-day': 'wi-day-sunny',
@@ -114,17 +115,16 @@ const displayCurrentWeather = () => {
   $("#current-details").html('');
   $('#current-details').append(`
     <div class="details">
-      <div class="details-left>
-        <h2><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h2>
-        <h2><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h2>
-        <i id="wi ${weatherIcons[forecast.dailyForecast()[0].icon]} wi-fw"></i> 
-        <h2><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h2>
+      <div class="details-left">
+        <h4><span id="Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h4>
+        <h4><span id="Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h4>
+        <h4><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h4>
        </div>
 
       <div class"details-right">
-        <h2><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h2>
-        <h2><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h2>
-        <h2><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h2>
+        <h4><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h4>
+        <h4><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h4>
+        <h4><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h4>
       </div>
     </div>
   `);
@@ -132,26 +132,41 @@ const displayCurrentWeather = () => {
 }
 
 const displayHourlyWeather = () => {
-  $(".hourly-container").html('');
+  $(".hourly-container").html('')
   
   forecast.hourlyForecast().forEach(function(weather) {
-    
     $('.hourly-container').append(`
       <div class='hourly-item'>
-        <h4>${weather.time_short}</h4>
-        <h4>${weather.summary}</h4>
+        <h5>${weather.time_short}</h5>
+        <h5>${weather.summary}</h5>
       </div>
     `)
   })
-  $('#hourly').css('display', 'inherit');
-};
+  $('#hourly').css('display', 'inherit')
+}
+
+const displayDailyWeather = () => {
+  $("#daily").html('')
+  forecast.dailyForecast().forEach(function(weather) {
+    $('#daily').append(`
+      <div class="daily-container">
+        <h7 class="daily-day">${weather.day}</h7>
+        <h7 class="daily-summary">${weather.summary}</h7>
+        <h7 class="daily-precip">${weather.precip_prob}%</h7>
+        <h7 class="daily-low">Low ${weather.low}&deg;</h7>
+        <h7 class="daily-high">High ${weather.high}&deg;</h7>
+      </div>
+    `)
+  })
+  $('#daily').css('display', 'inherit')
+}
 
 const getFavorites = () => {
   let url = `${productionUrl}/api/v1/favorites?api_key=${api_key}`
   fetch(url)
   .then((response) => response.json())
   .then((res) => {
-    displayFavorites(res);
+    displayFavorites(res)
   })
   .catch(error => {
     console.log(error)
@@ -159,7 +174,7 @@ const getFavorites = () => {
 };
 
 const displayFavorites = (response) => {
-  $("#favorites").html('');
+  $("#favorites").html('')
   
   let favorites = response.data
   
@@ -184,7 +199,7 @@ const postFavorite = () => {
 }
 
 const deleteFavorite = (location) => {
-  let favoriteData = new formData()
+  let favoriteData = new FormData()
   favoriteData.append('location', location)
   favoriteData.append('api_key', api_key)
   fetch(`${productionUrl}/api/v1/favorites`, {
@@ -204,7 +219,7 @@ const deleteFavorite = (location) => {
 // The FormData interface provides a way to easily construct 
 // a set of key/value pairs representing form fields and their values
 
-// new formData()
+// new FormData()
 
 // FormData.append()
 // Appends a new value onto an existing key inside 

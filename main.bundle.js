@@ -74,6 +74,7 @@
 	var displayWeather = function displayWeather() {
 	  displayCurrentWeather();
 	  displayHourlyWeather();
+	  displayDailyWeather();
 	};
 	var weatherIcons = {
 	  'clear-day': 'wi-day-sunny',
@@ -140,7 +141,7 @@
 	  $('#current-summary').append('\n  \n  <div class=\'favorite-btn\'>\n    <div id=\'add-favorite\'>\n      <button class=\'add-btn\'>Add</button>\n    </div>\n\n    <div id=\'remove-favorite\' >\n      <button class=\'remove-btn\'>Remove</button>\n    </div>\n  </div>\n\n  <div class="summary-left">\n    <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n    <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n  </div>\n  \n  <div class="summary-right">\n    <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n    <h2>\n      <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n      <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n    </h2>\n  </div>\n  ');
 
 	  $("#current-details").html('');
-	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h2><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h2>\n        <h2><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h2>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h2><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h2>\n       </div>\n\n      <div class"details-right">\n        <h2><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h2>\n        <h2><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h2>\n        <h2><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h2>\n      </div>\n    </div>\n  ');
+	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left">\n        <h4><span id="Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h4>\n        <h4><span id="Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h4>\n        <h4><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h4>\n       </div>\n\n      <div class"details-right">\n        <h4><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h4>\n        <h4><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h4>\n        <h4><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h4>\n      </div>\n    </div>\n  ');
 	  $('#current-summary, #current-details').css('display', 'inherit');
 	};
 
@@ -148,10 +149,17 @@
 	  $(".hourly-container").html('');
 
 	  forecast.hourlyForecast().forEach(function (weather) {
-
-	    $('.hourly-container').append('\n      <div class=\'hourly-item\'>\n        <h4>' + weather.time_short + '</h4>\n        <h4>' + weather.summary + '</h4>\n      </div>\n    ');
+	    $('.hourly-container').append('\n      <div class=\'hourly-item\'>\n        <h5>' + weather.time_short + '</h5>\n        <h5>' + weather.summary + '</h5>\n      </div>\n    ');
 	  });
 	  $('#hourly').css('display', 'inherit');
+	};
+
+	var displayDailyWeather = function displayDailyWeather() {
+	  $("#daily").html('');
+	  forecast.dailyForecast().forEach(function (weather) {
+	    $('#daily').append('\n      <div class="daily-container">\n        <h7 class="daily-day">' + weather.day + '</h7>\n        <h7 class="daily-summary">' + weather.summary + '</h7>\n        <h7 class="daily-precip">' + weather.precip_prob + '%</h7>\n        <h7 class="daily-low">Low ' + weather.low + '&deg;</h7>\n        <h7 class="daily-high">High ' + weather.high + '&deg;</h7>\n      </div>\n    ');
+	  });
+	  $('#daily').css('display', 'inherit');
 	};
 
 	var getFavorites = function getFavorites() {
@@ -191,7 +199,7 @@
 	};
 
 	var deleteFavorite = function deleteFavorite(location) {
-	  var favoriteData = new formData();
+	  var favoriteData = new FormData();
 	  favoriteData.append('location', location);
 	  favoriteData.append('api_key', api_key);
 	  fetch(productionUrl + '/api/v1/favorites', {
@@ -210,7 +218,7 @@
 	// The FormData interface provides a way to easily construct 
 	// a set of key/value pairs representing form fields and their values
 
-	// new formData()
+	// new FormData()
 
 	// FormData.append()
 	// Appends a new value onto an existing key inside 
