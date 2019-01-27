@@ -19,6 +19,13 @@ This project is built with JavaScript and JQuery
 1. User account creation functionality (GET /api/v1/users)
 2. User authentication functionality (GET/POST /api/v1/sessions)
 
+## How To Use
+Simply type any combination of city, state and zipcode in the search bar and hit search! The application will return current weather, hourly weather and daily weather forecasts for any location.
+
+In addition to searching for weather forecasts, users can add and remove locations to/from their Favorites list to easily access often searched location.
+
+![Screenshot](screenshot.png)
+
 ## How to Contribute
 Currently, I am the sole contributor to this project.  However, suggestions for improvements can be submitted by forking a copy of this repository and submitting a pull request.
 
