@@ -1,9 +1,5 @@
 // This file is in the entry point in your webpack config.
 
-require('hot-module-replacement')({
-  // options are optional
-  ignore: /node_modules/  // regexp to decide if module should be ignored; also can be a function accepting string and returning true/false
-})
 
 // 1. Weather for a location:
 // - GET /api/v1/forecast?location=denver,co
@@ -182,17 +178,6 @@ const favoriteToggle = ()  => {
     $('#remove-favorite').toggle()
   })
 }
-
-// -------------HMR CONFIG-------------
-
-// let foo = require('.index.js');
- 
-// if (module.hot) { 
-//   module.hot.accept('.index.js', () => {
-//     // if foo.js or any files that foo.js depend on are modified this callback is invoked
-//     foo = require('.index.js'); // by this time module cache entry for 'foo' already cleaned and module reloaded, requiring again is the easiest way of geting reference to new module. We need to assign it to local foo variable to make our local code in this file aware of it.
-//   })
-// }
 
 
 

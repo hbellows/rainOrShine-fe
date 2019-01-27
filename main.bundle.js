@@ -54,6 +54,7 @@
 
 	// This file is in the entry point in your webpack config.
 
+
 	// 1. Weather for a location:
 	// - GET /api/v1/forecast?location=denver,co
 	// 2. Favoriting Locations
@@ -90,6 +91,7 @@
 
 	$(document).ready(function () {
 	  getFavorites();
+	  favoriteToggle();
 	});
 
 	var getCurrentWeather = function getCurrentWeather(location) {
@@ -110,7 +112,7 @@
 
 	var displayCurrentWeather = function displayCurrentWeather() {
 	  $("#current-summary").html('');
-	  $('#current-summary').append('\n    <div class="summary-left">\n      <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n      <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n    </div>\n      \n      <div class="summary-right">\n      <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n      <h2>\n        <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n        <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n      </h2>\n    </div>\n  ');
+	  $('#current-summary').append('\n  \n  <div class="summary-left">\n    <div class=\'favorite-btn\'>\n      <div id=\'add-favorite\'>\n        <button class=\'add-btn\' onclick="postFavorite()">Add</button>\n      </div>\n\n      <div id=\'remove-favorite\' >\n        <button class=\'remove-btn\' onclick="deleteFavorite(location)">Remove</button>\n      </div>\n    </div>\n\n    <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n    <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n  </div>\n  \n  <div class="summary-right">\n    <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n    <h2>\n      <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n      <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n    </h2>\n  </div>\n  ');
 
 	  $("#current-details").html('');
 	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h5><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h5>\n        <h5><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h5>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h5><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h5>\n       </div>\n\n      <div class"details-right">\n        <h5><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h5>\n        <h5><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h5>\n        <h5><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h5>\n      </div>\n    </div>\n  ');
@@ -179,6 +181,13 @@
 	  getFavorites();
 	};
 
+	var favoriteToggle = function favoriteToggle() {
+	  $('#add-favorite, #remove-favorite').click(function () {
+	    $('#add-favorite').toggle();
+	    $('#remove-favorite').toggle();
+	  });
+	};
+
 	// --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
 	// The FormData interface provides a way to easily construct 
 	// a set of key/value pairs representing form fields and their values
@@ -190,24 +199,6 @@
 	// a FormData object, or adds the key if it does not already exist.
 
 	// --------------
-
-	{/* <div class='favorite-btn'>
-	   <div id='add-favortie'>
-	     <button class='add-btn' onclick="postFavorite()">Add</button>
-	   </div>
-	    <div id='remove-favorite' >
-	     <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
-	   </div>
-	  </div>
-	  #remove-favorite {
-	   display: none;
-	  }
-	  $(document).ready(function() {
-	   $('#add-favorite, #remove-favorite').click(function() {
-	     $('#add-favorite').toggle()
-	     $('#remove-favorite').toggle()
-	   })
-	  }) */}
 
 /***/ }),
 /* 1 */
