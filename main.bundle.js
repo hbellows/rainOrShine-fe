@@ -71,6 +71,10 @@
 	var api_key = 'abc123';
 
 	var forecast = void 0;
+	var displayWeather = function displayWeather() {
+	  displayCurrentWeather();
+	  displayHourlyWeather();
+	};
 	var weatherIcons = {
 	  'clear-day': 'wi-day-sunny',
 	  'clear-night': 'wi-night-clear',
@@ -94,9 +98,7 @@
 	    return response.json();
 	  }).then(function (data) {
 	    return forecast = new _forecast2.default(data);
-	  }).then(displayCurrentWeather).then(displayHourlyWeather)
-	  // .then(displayDailyWeather)
-	  .catch(function (error) {
+	  }).then(displayWeather).catch(function (error) {
 	    console.log(error);
 	  });
 	};
@@ -116,11 +118,13 @@
 	};
 
 	var displayHourlyWeather = function displayHourlyWeather() {
-	  $("#hourly-container").html('');
+	  $(".hourly-container").html('');
+
 	  forecast.hourlyForecast().forEach(function (weather) {
-	    debugger;
-	    $('#hourly-container').append('\n      <div class=\'hourly-forecast\'>\n        <h4 id="time">' + weather.time_short + '</h4>\n        <h4 id="summary">' + weather.summary + '</h4>\n      </div>\n    ');
+
+	    $('.hourly-container').append('\n      <div class=\'hourly-item\'>\n        <h4>' + weather.time_short + '</h4>\n        <h4>' + weather.summary + '</h4>\n      </div>\n    ');
 	  });
+	  $('#hourly').css('display', 'inherit');
 	};
 
 	var getFavorites = function getFavorites() {
@@ -204,16 +208,6 @@
 	     $('#remove-favorite').toggle()
 	   })
 	  }) */}
-
-	function newFunction() {
-	  return null;
-	}
-
-	function newFunction() {
-	  $(document).ready(function () {
-	    getFavorites();
-	  });
-	}
 
 /***/ }),
 /* 1 */
