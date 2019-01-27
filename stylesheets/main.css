@@ -190,3 +190,13 @@ h4 {
   grid-area: daily;
   display: none;
 }
+
+/* ----------Favorites----------- */
+
+#remove-favorite {
+  display: none;
+}
+
+.favorite-btn {
+  float: left;
+}

@@ -36,6 +36,7 @@ const weatherIcons = {
 
 $(document).ready(() => {
   getFavorites();
+  favoriteToggle();
 });
 
 const getCurrentWeather = (location) => {
@@ -60,6 +61,17 @@ const displayCurrentWeather = () => {
   $("#current-summary").html('');
   $('#current-summary').append(`
     <div class="summary-left">
+
+    <div class='favorite-btn'>
+      <div id='add-favortie'>
+        <button class='add-btn' onclick="postFavorite()">Add</button>
+      </div>
+
+      <div id='remove-favorite' >
+        <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
+      </div>
+    </div>
+    
       <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
       <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
     </div>
@@ -159,6 +171,12 @@ const deleteFavorite = (location) => {
     getFavorites();
 }
 
+const favoriteToggle = ()  => {
+  $('#add-favorite, #remove-favorite').click(function() {
+    $('#add-favorite').toggle()
+    $('#remove-favorite').toggle()
+  })
+}
 // --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
 // The FormData interface provides a way to easily construct 
 // a set of key/value pairs representing form fields and their values
@@ -171,23 +189,8 @@ const deleteFavorite = (location) => {
 
 // --------------
 
-{/* <div class='favorite-btn'>
-  <div id='add-favortie'>
-    <button class='add-btn' onclick="postFavorite()">Add</button>
-  </div>
 
-  <div id='remove-favorite' >
-    <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
-  </div>
-</div>
 
-#remove-favorite {
-  display: none;
-}
 
-$(document).ready(function() {
-  $('#add-favorite, #remove-favorite').click(function() {
-    $('#add-favorite').toggle()
-    $('#remove-favorite').toggle()
-  })
-}) */}
+
+
