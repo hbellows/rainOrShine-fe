@@ -4,12 +4,6 @@ silver = #C2B9B1
 dim-gray = #4F4243
 slate-gray = #626973 */
 
-/* color: #09BAFB
-color: #143760
-color: #C2B9B1
-color: #4F4243
-background-color: #626973 */
-
 body {
   background-image: url("../images/denverunionstation.jpg");
   background-size: cover;
@@ -35,12 +29,25 @@ h2 {
 h3 {
   color: rgba(78, 217, 241, 0.836);
   font-size: 0.8em;
-  margin: 20px 8px 8px 8px;
+  margin: 20px 8px 8px 20px;
 }
 
 h4 {
+  color: rgb(0, 133, 194);
+  font-size: 0.7em;
+}
+
+h5 {
+  color: #09BAFB;
   font-size: 0.6em;
 }
+
+h6 {
+  color: rgba(78, 217, 241, 0.966);
+  font-size: 0.6em;
+}
+
+
 
 /* ----Main Container---- */
 .container {
@@ -143,6 +150,14 @@ h4 {
   align-content: center;
 }
 
+.current-details {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: center;
+  align-content: center;
+}
+
 .hourly-container {
   display: grid;
   grid-template-areas:
@@ -155,12 +170,15 @@ h4 {
   margin-top: 15px;
 }
 
-.add-btn, .remove-btn {
-  border-radius: 8px;
-  font-family: inherit;
-  background-color: #09BAFB;
-  border-color: transparent;
-  font-size: inherit;
+.daily-container {
+  margin: 15px 0 15px 0;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: 15% 45% 10% 10%;
+  grid-template-areas:
+    "daily-day daily-low daily-high daily-summary";
 }
 
 .summary-left {
@@ -200,12 +218,21 @@ h4 {
 }
 
 /* ----------Favorites----------- */
+.favorite-btn {
+  justify-self: start;
+  margin: auto;
+}
+
+.add-btn, .remove-btn {
+  border-radius: 6px;
+  font-family: inherit;
+  /* background-color: #09BAFB; */
+  background-color: rgb(0, 133, 194);
+  border-color: transparent;
+  font-size: inherit;
+}
 
 #remove-favorite {
   display: none;
 }
 
-.favorite-btn {
-  justify-self: start;
-  margin: auto;
-}

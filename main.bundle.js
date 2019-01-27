@@ -191,7 +191,7 @@
 	};
 
 	var deleteFavorite = function deleteFavorite(location) {
-	  var favoriteData = new formData();
+	  var favoriteData = new FormData();
 	  favoriteData.append('location', location);
 	  favoriteData.append('api_key', api_key);
 	  fetch(productionUrl + '/api/v1/favorites', {
@@ -210,7 +210,7 @@
 	// The FormData interface provides a way to easily construct 
 	// a set of key/value pairs representing form fields and their values
 
-	// new formData()
+	// new FormData()
 
 	// FormData.append()
 	// Appends a new value onto an existing key inside 
