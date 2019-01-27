@@ -54,7 +54,6 @@
 
 	// This file is in the entry point in your webpack config.
 
-
 	// 1. Weather for a location:
 	// - GET /api/v1/forecast?location=denver,co
 	// 2. Favoriting Locations
@@ -91,8 +90,34 @@
 
 	$(document).ready(function () {
 	  getFavorites();
-	  favoriteToggle();
+	  eventListeners();
 	});
+
+	var eventListeners = function eventListeners() {
+	  addFavorite();
+	  removeFavorite();
+	};
+
+	var favoriteToggle = function favoriteToggle() {
+	  $('#add-favorite, #remove-favorite').click(function () {
+	    $('#add-favorite').toggle();
+	    $('#remove-favorite').toggle();
+	  });
+	};
+
+	var addFavorite = function addFavorite() {
+	  $('.current-summary').click('.add-btn', function (event) {
+	    postFavorite();
+	    favoriteToggle();
+	  });
+	};
+
+	var removeFavorite = function removeFavorite() {
+	  $('.current-summary').click('.remove-btn', function (event) {
+	    deleteFavorite();
+	    favoriteToggle();
+	  });
+	};
 
 	var getCurrentWeather = function getCurrentWeather(location) {
 	  var url = productionUrl + '/api/v1/forecast?location=' + location;
@@ -112,10 +137,10 @@
 
 	var displayCurrentWeather = function displayCurrentWeather() {
 	  $("#current-summary").html('');
-	  $('#current-summary').append('\n  \n  <div class="summary-left">\n    <div class=\'favorite-btn\'>\n      <div id=\'add-favorite\'>\n        <button class=\'add-btn\' onclick="postFavorite()">Add</button>\n      </div>\n\n      <div id=\'remove-favorite\' >\n        <button class=\'remove-btn\' onclick="deleteFavorite(location)">Remove</button>\n      </div>\n    </div>\n\n    <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n    <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n  </div>\n  \n  <div class="summary-right">\n    <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n    <h2>\n      <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n      <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n    </h2>\n  </div>\n  ');
+	  $('#current-summary').append('\n  \n  <div class=\'favorite-btn\'>\n    <div id=\'add-favorite\'>\n      <button class=\'add-btn\'>Add</button>\n    </div>\n\n    <div id=\'remove-favorite\' >\n      <button class=\'remove-btn\'>Remove</button>\n    </div>\n  </div>\n\n  <div class="summary-left">\n    <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n    <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n  </div>\n  \n  <div class="summary-right">\n    <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n    <h2>\n      <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n      <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n    </h2>\n  </div>\n  ');
 
 	  $("#current-details").html('');
-	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h5><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h5>\n        <h5><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h5>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h5><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h5>\n       </div>\n\n      <div class"details-right">\n        <h5><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h5>\n        <h5><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h5>\n        <h5><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h5>\n      </div>\n    </div>\n  ');
+	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left>\n        <h2><span id="currently-Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h2>\n        <h2><span id="currently-Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h2>\n        <i id="wi ' + weatherIcons[forecast.dailyForecast()[0].icon] + ' wi-fw"></i> \n        <h2><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h2>\n       </div>\n\n      <div class"details-right">\n        <h2><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h2>\n        <h2><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h2>\n        <h2><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h2>\n      </div>\n    </div>\n  ');
 	  $('#current-summary, #current-details').css('display', 'inherit');
 	};
 
@@ -150,7 +175,7 @@
 	  });
 	};
 
-	var postFavorite = function postFavorite(location) {
+	var postFavorite = function postFavorite() {
 	  fetch(productionUrl + '/api/v1/favorites?api_key=' + api_key, {
 	    method: 'POST',
 	    headers: { 'Content-Type': 'application/json' },
@@ -179,13 +204,6 @@
 	    return console.error(error);
 	  });
 	  getFavorites();
-	};
-
-	var favoriteToggle = function favoriteToggle() {
-	  $('#add-favorite, #remove-favorite').click(function () {
-	    $('#add-favorite').toggle();
-	    $('#remove-favorite').toggle();
-	  });
 	};
 
 	// --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
