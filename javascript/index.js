@@ -78,12 +78,6 @@ const displayFavorites = (response) => {
   });
 }
 
-// serial.forEach(function(val, i) {
-//   var el = $('<div class="n' + i + '"></div>').html(val);
-//   $('.elements').append('<div class="n' + i + '"></div>');
-//   $('.elements .n' + i).html(val);
-// })
-
 const postFavorite = (location) => {
   fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
      method: 'POST',
@@ -97,6 +91,31 @@ const postFavorite = (location) => {
     getFavorites();
 }
 
+const deleteFavorite = (location) => {
+  let favoriteData = new formData()
+  favoriteData.append('location', location)
+  favoriteData.append('api_key', api_key)
+  fetch(`${productionUrl}/api/v1/favorites`, {
+     method: 'DELETE',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify(favoriteData)
+   })
+    .then(response => response.json())
+    .catch(error => console.error(error))
+    getFavorites();
+}
+
+// --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
+// The FormData interface provides a way to easily construct 
+// a set of key/value pairs representing form fields and their values
+
+// new formData()
+
+// FormData.append()
+// Appends a new value onto an existing key inside 
+// a FormData object, or adds the key if it does not already exist.
+
+// --------------
 
 {/* <div class='favorite-btn'>
   <div id='add-favortie'>
@@ -104,7 +123,7 @@ const postFavorite = (location) => {
   </div>
 
   <div id='remove-favorite' >
-    <button class='remove-btn' onclick="deleteFavorite()">Remove</button>
+    <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
   </div>
 </div>
 
