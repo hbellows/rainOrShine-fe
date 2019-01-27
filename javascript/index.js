@@ -14,7 +14,9 @@
 // - POST /api/v1/sessions
 
 const productionUrl = 'https://rain-or-shine-1.herokuapp.com';
-const api_key = 'abc123'
+const api_key = 'abc123';
+import Forecast from './forecast.js';
+let forecast;
 const weatherIcons = {
   'clear-day': 'wi-day-sunny',
   'clear-night': 'wi-night-clear',
@@ -32,34 +34,12 @@ $(document).ready(() => {
   getFavorites();
 });
 
-class WeatherData {
-  constructor(data) {
-    this.weather_data = data;
-  }
-
-  currentLocation() {
-    return this.weather_data.data.id;
-  }
-
-  currentForecast() {
-    return this.weather_data.data.attributes.current_forecast;
-  }
-
-  hourlyForecast() {
-    return this.weather_data.data.attributes.hourly_forecast.slice(0, 11);
-  }
-
-  dailyForecast() {
-    return this.weather_data.data.attributes.daily_forecast;
-  }
-}
-
 const getCurrentWeather = (location) => {
-  let url = `${productionUrl}/api/v1/forecast?location=${location}`
+  let url = `${productionUrl}/api/v1/forecast?location=${location}`;
   fetch(url)
   .then((response) => response.json())
   .then(data => {
-    return weather = new WeatherData(data);
+    return forecast = new Forecast(data);
   })
   .then(displayCurrentWeather)
   .then(displayHourlyWeather)
@@ -78,15 +58,15 @@ const displayCurrentWeather = () => {
   $("#current-summary").html('');
   $('#current-summary').append(`
     <div class="summary-left">
-      <h2><span class="currently-location">${weather.currentLocation()}</span></h2>
-      <h2><span class="currently-time">${weather.currentForecast().time_long}</span></h2>
+      <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
+      <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
     </div>
       
       <div class="summary-right">
-      <h2><span id="currently-temperature">Now ${weather.currentForecast().temp}</span>&deg;</h2>
+      <h2><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h2>
       <h2>
-        <span id="currently-temperature">Low ${weather.dailyForecast()[0].low}</span>&deg;
-        <span id="currently-temperature">High ${weather.dailyForecast()[0].high}</span>&deg;
+        <span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;
+        <span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;
       </h2>
     </div>
   `);
@@ -95,16 +75,16 @@ const displayCurrentWeather = () => {
   $('#current-details').append(`
     <div class="details">
       <div class="details-left>
-        <h5><span id="currently-Sunrise">Sunrise ${weather.dailyForecast()[0].sunrise}</span></h5>
-        <h5><span id="currently-Sunset">Sunset ${weather.dailyForecast()[0].sunset}</span></h5>
-        <i id="wi ${weatherIcons[weather.dailyForecast()[0].icon]} wi-fw"></i> 
-        <h5><span id="currently-summary">${weather.dailyForecast()[0].summary}</span></h5>
+        <h5><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h5>
+        <h5><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h5>
+        <i id="wi ${weatherIcons[forecast.dailyForecast()[0].icon]} wi-fw"></i> 
+        <h5><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h5>
        </div>
 
       <div class"details-right">
-        <h5><span id="currently-apparent-temperature">Feels Like ${weather.currentForecast().feels_like}</span>&deg;</h5>
-        <h5><span id="currently-humidity">Humdiity ${weather.currentForecast().humidity}%</span></h5>
-        <h5><span id="currently-uvIndex">UV Index ${weather.currentForecast().uv_index}</span></h5>
+        <h5><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h5>
+        <h5><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h5>
+        <h5><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h5>
       </div>
     </div>
   `);
@@ -114,7 +94,7 @@ const displayCurrentWeather = () => {
 const displayHourlyWeather = () => {
   $("#hourly-container").html('');
   
-  weather.hourlyForecast().forEach(function(weather) {
+  forecast.hourlyForecast().forEach(function(weather) {
     $('#hourly-container').append(`
       <div class='hourly-forecast'>
         <h4 id="time">${weather.time_short}</h4>
@@ -123,7 +103,6 @@ const displayHourlyWeather = () => {
     `)
   })
 };
-
 
 
 const getFavorites = () => {
@@ -209,3 +188,13 @@ $(document).ready(function() {
     $('#remove-favorite').toggle()
   })
 }) */}
+
+function newFunction() {
+  return null;
+}
+
+function newFunction() {
+  $(document).ready(() => {
+    getFavorites();
+  });
+}
