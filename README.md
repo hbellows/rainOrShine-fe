@@ -3,6 +3,8 @@ This is a simple one page weather app.  A user can enter any combination of city
 
 Endpoints consummed by this application can be found [here](https://github.com/hbellows/rain_or_shine).
 
+View the project board for this application [here]
+
 ## Tech Stack
 This project is built with JavaScript and JQuery
 
