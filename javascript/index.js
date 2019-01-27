@@ -27,6 +27,12 @@ const getCurrentWeather = (location) => {
   .then((res) => {
     displayCurrentWeatherSummary(res);
   })
+  // .then((res) => {
+  //   displayHourlyWeather(res);
+  // })
+  // .then((res) => {
+  //   displayDailyWeather(res);
+  // })
   .catch(error => {
     console.log(error)
     });
@@ -38,20 +44,41 @@ $('#location-search').on('click', function() {
 });
 
 const displayCurrentWeatherSummary = (response) => {
-  // document.getElementById("current-summary-container").innerHTML = (response.data.attributes.current_forecast.time)
   $("#current-summary").html('');
   $('#current-summary').append(`
     <div class="summary-left">
       <h5><span class="currently-location">${response.data.id}</span></h5>
-      <h5><span id="currently-summary">${response.data.attributes.current_forecast.summary}</span></h5>
       <h5><span class="currently-time">${response.data.attributes.current_forecast.time}</span></h5>
       <h5><span id="currently-temperature">Now ${response.data.attributes.current_forecast.temp}</span>&deg;</h5>
-      <h5><span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;</h5>
-      <h5><span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span></h5>
-      <h5><span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span></h5>
+      <h5>
+        <span id="currently-temperature">Low ${response.data.attributes.daily_forecast[0].low}</span>&deg;
+        <span id="currently-temperature">High ${response.data.attributes.daily_forecast[0].high}</span>&deg;
+      </h5>
+    </div>
+
+    <div class="summary-right">
+
     </div>
   `);
-  $('#current-summary').css('display', 'inherit');
+
+  $("#current-details").html('');
+  $('#current-details').append(`
+    <div class="details">
+      <div class="details-left>
+      <h5><span id="currently-Sunrise">Sunrise ${response.data.attributes.daily_forecast[0].sunrise}</span></h5>
+      <h5><span id="currently-Sunset">Sunset ${response.data.attributes.daily_forecast[0].sunset}</span></h5>
+        <h5><span id="currently-summary">${response.data.attributes.daily_forecast[0].summary}</span></h5>
+      </div>
+
+      <div class"details-right">
+        <h5><span id="currently-apparent-temperature">Feels Like ${response.data.attributes.current_forecast.feels_like}</span>&deg;</h5>
+        <h5><span id="currently-humidity">Humdiity ${response.data.attributes.current_forecast.humidity}%</span></h5>
+        <h5><span id="currently-uvIndex">UV Index ${response.data.attributes.current_forecast.uv_index}</span></h5>
+        <h5><span id="currently-precip">${response.data.attributes.daily_forecast[0].precip_type}</span></h5>
+      </div>
+    </div>
+  `);
+  $('#current-summary, #current-details').css('display', 'inherit');
 }
 
 const getFavorites = () => {

@@ -58,7 +58,7 @@ body {
   grid-template-columns: 45% 45%;
   grid-template-areas:
     "search-bar search-bar"
-    "current-summary current-detailed"
+    "current-summary current-details"
     "hourly hourly"
     "daily daily";
   grid-column-gap: 30px;
@@ -128,8 +128,8 @@ body {
   display: none;
 }
 
-#current-detailed {
-  grid-area: current-detailed;
+#current-details {
+  grid-area: current-details;
   display: none;
 }
 
