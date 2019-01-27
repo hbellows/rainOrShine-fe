@@ -1,6 +1,5 @@
 // This file is in the entry point in your webpack config.
 
-
 // 1. Weather for a location:
 // - GET /api/v1/forecast?location=denver,co
 // 2. Favoriting Locations
@@ -21,7 +20,7 @@ let forecast;
 const displayWeather = () => {
   displayCurrentWeather()
   displayHourlyWeather()
- }
+ };
 const weatherIcons = {
   'clear-day': 'wi-day-sunny',
   'clear-night': 'wi-night-clear',
@@ -36,43 +35,69 @@ const weatherIcons = {
 }
 
 $(document).ready(() => {
-  getFavorites();
-  favoriteToggle();
+  getFavorites()
+  eventListeners()
 });
+
+const eventListeners = () => {
+  addFavorite()
+  removeFavorite()
+}
+
+const favoriteToggle = ()  => {
+  $('#add-favorite, #remove-favorite').click(function() {
+    $('#add-favorite').toggle()
+    $('#remove-favorite').toggle()
+  })
+}
+
+const addFavorite = () => {
+  $('.current-summary').click('.add-btn',(event) => {
+    postFavorite();
+    favoriteToggle();
+  })
+}
+
+const removeFavorite = () => {
+  $('.current-summary').click('.remove-btn',(event) => {
+    deleteFavorite()
+    favoriteToggle()
+  })
+}
 
 const getCurrentWeather = (location) => {
   let url = `${productionUrl}/api/v1/forecast?location=${location}`;
   fetch(url)
   .then((response) => response.json())
   .then(data => {
-    return forecast = new Forecast(data);
+    return forecast = new Forecast(data)
   })
   .then(displayWeather)
   .catch(error => {
     console.log(error)
-  });
-};
+  })
+}
 
 $('#location-search').on('click', function() {
-  var location = $('#location').val();
-  getCurrentWeather(location);
+  var location = $('#location').val()
+  getCurrentWeather(location)
 });
 
 const displayCurrentWeather = () => {
-  $("#current-summary").html('');
+  $("#current-summary").html('')
   $('#current-summary').append(`
   
-  <div class="summary-left">
-    <div class='favorite-btn'>
-      <div id='add-favorite'>
-        <button class='add-btn' onclick="postFavorite()">Add</button>
-      </div>
-
-      <div id='remove-favorite' >
-        <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
-      </div>
+  <div class='favorite-btn'>
+    <div id='add-favorite'>
+      <button class='add-btn'>Add</button>
     </div>
 
+    <div id='remove-favorite' >
+      <button class='remove-btn'>Remove</button>
+    </div>
+  </div>
+
+  <div class="summary-left">
     <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
     <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
   </div>
@@ -90,16 +115,16 @@ const displayCurrentWeather = () => {
   $('#current-details').append(`
     <div class="details">
       <div class="details-left>
-        <h5><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h5>
-        <h5><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h5>
+        <h2><span id="currently-Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h2>
+        <h2><span id="currently-Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h2>
         <i id="wi ${weatherIcons[forecast.dailyForecast()[0].icon]} wi-fw"></i> 
-        <h5><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h5>
+        <h2><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h2>
        </div>
 
       <div class"details-right">
-        <h5><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h5>
-        <h5><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h5>
-        <h5><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h5>
+        <h2><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h2>
+        <h2><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h2>
+        <h2><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h2>
       </div>
     </div>
   `);
@@ -145,7 +170,7 @@ const displayFavorites = (response) => {
   });
 }
 
-const postFavorite = (location) => {
+const postFavorite = () => {
   fetch(`${productionUrl}/api/v1/favorites?api_key=${api_key}`, {
      method: 'POST',
      headers: { 'Content-Type': 'application/json' },
@@ -172,12 +197,6 @@ const deleteFavorite = (location) => {
     getFavorites();
 }
 
-const favoriteToggle = ()  => {
-  $('#add-favorite, #remove-favorite').click(function() {
-    $('#add-favorite').toggle()
-    $('#remove-favorite').toggle()
-  })
-}
 
 
 
