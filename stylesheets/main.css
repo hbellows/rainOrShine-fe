@@ -138,7 +138,7 @@ h4 {
 .current-summary {
   padding: 20px;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: auto auto auto;
   justify-items: center;
   align-content: center;
 }
@@ -189,4 +189,14 @@ h4 {
 #daily {
   grid-area: daily;
   display: none;
+}
+
+/* ----------Favorites----------- */
+
+#remove-favorite {
+  display: none;
+}
+
+.favorite-btn {
+  float: left;
 }

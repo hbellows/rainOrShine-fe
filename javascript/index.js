@@ -1,5 +1,10 @@
 // This file is in the entry point in your webpack config.
 
+require('hot-module-replacement')({
+  // options are optional
+  ignore: /node_modules/  // regexp to decide if module should be ignored; also can be a function accepting string and returning true/false
+})
+
 // 1. Weather for a location:
 // - GET /api/v1/forecast?location=denver,co
 // 2. Favoriting Locations
@@ -36,6 +41,7 @@ const weatherIcons = {
 
 $(document).ready(() => {
   getFavorites();
+  favoriteToggle();
 });
 
 const getCurrentWeather = (location) => {
@@ -59,18 +65,29 @@ $('#location-search').on('click', function() {
 const displayCurrentWeather = () => {
   $("#current-summary").html('');
   $('#current-summary').append(`
-    <div class="summary-left">
-      <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
-      <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
+  
+  <div class="summary-left">
+    <div class='favorite-btn'>
+      <div id='add-favorite'>
+        <button class='add-btn' onclick="postFavorite()">Add</button>
+      </div>
+
+      <div id='remove-favorite' >
+        <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
+      </div>
     </div>
-      
-      <div class="summary-right">
-      <h2><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h2>
-      <h2>
-        <span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;
-        <span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;
-      </h2>
-    </div>
+
+    <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
+    <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
+  </div>
+  
+  <div class="summary-right">
+    <h2><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h2>
+    <h2>
+      <span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;
+      <span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;
+    </h2>
+  </div>
   `);
 
   $("#current-details").html('');
@@ -159,6 +176,26 @@ const deleteFavorite = (location) => {
     getFavorites();
 }
 
+const favoriteToggle = ()  => {
+  $('#add-favorite, #remove-favorite').click(function() {
+    $('#add-favorite').toggle()
+    $('#remove-favorite').toggle()
+  })
+}
+
+// -------------HMR CONFIG-------------
+
+// let foo = require('.index.js');
+ 
+// if (module.hot) { 
+//   module.hot.accept('.index.js', () => {
+//     // if foo.js or any files that foo.js depend on are modified this callback is invoked
+//     foo = require('.index.js'); // by this time module cache entry for 'foo' already cleaned and module reloaded, requiring again is the easiest way of geting reference to new module. We need to assign it to local foo variable to make our local code in this file aware of it.
+//   })
+// }
+
+
+
 // --------NOTES -> REMOVE ME BEFORE PUSH TO PRODUCTION--------
 // The FormData interface provides a way to easily construct 
 // a set of key/value pairs representing form fields and their values
@@ -171,23 +208,8 @@ const deleteFavorite = (location) => {
 
 // --------------
 
-{/* <div class='favorite-btn'>
-  <div id='add-favortie'>
-    <button class='add-btn' onclick="postFavorite()">Add</button>
-  </div>
 
-  <div id='remove-favorite' >
-    <button class='remove-btn' onclick="deleteFavorite(location)">Remove</button>
-  </div>
-</div>
 
-#remove-favorite {
-  display: none;
-}
 
-$(document).ready(function() {
-  $('#add-favorite, #remove-favorite').click(function() {
-    $('#add-favorite').toggle()
-    $('#remove-favorite').toggle()
-  })
-}) */}
+
+
