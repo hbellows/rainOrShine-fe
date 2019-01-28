@@ -47,11 +47,6 @@ h6 {
   font-size: 0.6em;
 }
 
-h7 {
-  color: rgba(78, 217, 241, 0.836);
-  font-size: 0.6em;
-}
-
 /* ----Main Container---- */
 .container {
   display: grid;
@@ -254,6 +249,20 @@ h7 {
 
 .daily-low h5 {
   display: inline;
+}
+
+#summary-icon {
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+#detail-icon {
+  font-size: 1.5em;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
 
 #current-summary {
