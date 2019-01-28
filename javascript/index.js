@@ -62,7 +62,7 @@ const addFavorite = () => {
 
 const removeFavorite = () => {
   $('.current-summary').click('.remove-btn',(event) => {
-    deleteFavorite()
+    deleteFavorite(event.target.id)
     favoriteToggle()
   })
 }
@@ -211,13 +211,13 @@ const postFavorite = () => {
 }
 
 const deleteFavorite = (location) => {
-  let favoriteData = new FormData()
-  favoriteData.append('location', location)
-  favoriteData.append('api_key', api_key)
+  let formData = new FormData()
+  formData.append('location', location)
+  formData.append('api_key', api_key)
   fetch(`${productionUrl}/api/v1/favorites`, {
      method: 'DELETE',
      headers: { 'Content-Type': 'application/json' },
-     body: JSON.stringify(favoriteData)
+     body: JSON.stringify(formData)
    })
     .then(response => response.json())
     .catch(error => console.error(error))
