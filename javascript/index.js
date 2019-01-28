@@ -163,7 +163,7 @@ const displayDailyWeather = () => {
           <i class="wi ${weatherIcons[weather.icon]}"></i><h5>${weather.summary}</h5>
         </div>
         <div class="daily-precip">
-          <i class="wi wi-raindrop"></i><h5>${weather.precip_prob}</h5>
+          <i class="wi wi-raindrop"></i><h5>${weather.precip_prob}%</h5>
         </div>
         <h5 class="daily-low">Low ${weather.low}&deg;</h5>
         <h5 class="daily-high">High ${weather.high}&deg;</h5>
