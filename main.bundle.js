@@ -97,6 +97,7 @@
 	var eventListeners = function eventListeners() {
 	  addFavorite();
 	  removeFavorite();
+	  favoriteWeather();
 	};
 
 	var favoriteToggle = function favoriteToggle() {
@@ -120,6 +121,12 @@
 	  });
 	};
 
+	var favoriteWeather = function favoriteWeather() {
+	  $('#favorites').click('.favorite-links', function (event) {
+	    getCurrentWeather(event.target.id);
+	  });
+	};
+
 	var getCurrentWeather = function getCurrentWeather(location) {
 	  var url = productionUrl + '/api/v1/forecast?location=' + location;
 	  fetch(url).then(function (response) {
@@ -138,10 +145,10 @@
 
 	var displayCurrentWeather = function displayCurrentWeather() {
 	  $("#current-summary").html('');
-	  $('#current-summary').append('\n  \n  <div class=\'favorite-btn\'>\n    <div id=\'add-favorite\'>\n      <button class=\'add-btn\'>Add</button>\n    </div>\n\n    <div id=\'remove-favorite\' >\n      <button class=\'remove-btn\'>Remove</button>\n    </div>\n  </div>\n\n  <div class="summary-left">\n    <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n    <h2><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h2>\n  </div>\n  \n  <div class="summary-right">\n    <h2><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h2>\n    <h2>\n      <span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;\n      <span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;\n    </h2>\n  </div>\n  ');
+	  $('#current-summary').append('\n  \n    <div class=\'favorite-btn\'>\n      <div id=\'add-favorite\'>\n        <button class=\'add-btn\'>Add</button>\n      </div>\n\n      <div id=\'remove-favorite\' >\n        <button class=\'remove-btn\'>Remove</button>\n      </div>\n    </div>\n\n    <div class="summary-left">\n      <h2><span class="currently-location">' + forecast.currentLocation() + '</span></h2>\n      <h4><span class="currently-time">' + forecast.currentForecast().time_long + '</span></h4>\n      <h4><span id="currently-temperature">Now ' + forecast.currentForecast().temp + '</span>&deg;</h4>\n      <h4><span id="currently-temperature">High ' + forecast.dailyForecast()[0].high + '</span>&deg;</h4>\n      <h4><span id="currently-temperature">Low ' + forecast.dailyForecast()[0].low + '</span>&deg;</h4>\n    </div>\n  ');
 
 	  $("#current-details").html('');
-	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left">\n        <h4><span id="Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h4>\n        <h4><span id="Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h4>\n        <h4><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h4>\n       </div>\n\n      <div class"details-right">\n        <h4><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h4>\n        <h4><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h4>\n        <h4><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h4>\n      </div>\n    </div>\n  ');
+	  $('#current-details').append('\n    <div class="details">\n      <div class="details-left">\n        <h4><span id="Sunrise">Sunrise ' + forecast.dailyForecast()[0].sunrise + '</span></h4>\n        <h4><span id="Sunset">Sunset ' + forecast.dailyForecast()[0].sunset + '</span></h4>\n        <h4><span id="currently-summary">' + forecast.dailyForecast()[0].summary + '</span></h4>\n        <h4><span id="currently-apparent-temperature">Feels Like ' + forecast.currentForecast().feels_like + '</span>&deg;</h4>\n        <h4><span id="currently-humidity">Humdiity ' + forecast.currentForecast().humidity + '%</span></h4>\n        <h4><span id="currently-uvIndex">UV Index ' + forecast.currentForecast().uv_index + '</span></h4>\n      </div>\n    </div>\n  ');
 	  $('#current-summary, #current-details').css('display', 'inherit');
 	};
 
@@ -149,7 +156,7 @@
 	  $(".hourly-container").html('');
 
 	  forecast.hourlyForecast().forEach(function (weather) {
-	    $('.hourly-container').append('\n      <div class=\'hourly-item\'>\n        <h5>' + weather.time_short + '</h5>\n        <h5>' + weather.summary + '</h5>\n      </div>\n    ');
+	    $('.hourly-container').append('\n      <div class=\'hourly-item\'>\n        <h5>' + weather.time_short + '</h5>\n        <h5>' + weather.temp + '&deg;</h5>\n        <h5>' + weather.summary + '</h5>\n      </div>\n    ');
 	  });
 	  $('#hourly').css('display', 'inherit');
 	};
@@ -179,7 +186,7 @@
 	  var favorites = response.data;
 
 	  favorites.forEach(function (location) {
-	    $('#favorites').append('\n      <h3 id="favorite">' + location.meta.data.id + '</h3>\n    ');
+	    $('#favorites').append('\n      <a href="javascript:void(0)" class="favorite-links" id="' + location.meta.data.id + '">' + location.meta.data.id + '</a>\n    ');
 	  });
 	};
 
