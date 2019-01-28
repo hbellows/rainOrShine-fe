@@ -18,6 +18,8 @@ This project is built with JavaScript and JQuery
 ## To Do
 1. User account creation functionality (GET /api/v1/users)
 2. User authentication functionality (GET/POST /api/v1/sessions)
+3. Refine DELETE request
+4. Rebuild button toggle for Add/Remove a Favorite location as it currently isn't working as intended
 
 ## How To Use
 Simply type any combination of city, state and zipcode in the search bar and hit search! The application will return current weather, hourly weather and daily weather forecasts for any location.
