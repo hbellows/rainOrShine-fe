@@ -164,7 +164,7 @@
 	var displayDailyWeather = function displayDailyWeather() {
 	  $("#daily").html('');
 	  forecast.dailyForecast().forEach(function (weather) {
-	    $('#daily').append('\n      <div class="daily-container">\n        <h5 class="daily-day">' + weather.day + '</h5>\n        <div class="daily-summary">\n          <i class="wi ' + weatherIcons[weather.icon] + '"></i><h5>' + weather.summary + '</h5>\n        </div>\n        <div class="daily-precip">\n          <i class="wi wi-raindrop"></i><h5>' + weather.precip_prob + '</h5>\n        </div>\n        <h5 class="daily-low">Low ' + weather.low + '&deg;</h5>\n        <h5 class="daily-high">High ' + weather.high + '&deg;</h5>\n      </div>\n    ');
+	    $('#daily').append('\n      <div class="daily-container">\n        <h5 class="daily-day">' + weather.day + '</h5>\n        <div class="daily-summary">\n          <i class="wi ' + weatherIcons[weather.icon] + '"></i><h5>' + weather.summary + '</h5>\n        </div>\n        <div class="daily-precip">\n          <i class="wi wi-raindrop"></i><h5>' + weather.precip_prob + '%</h5>\n        </div>\n        <h5 class="daily-low">Low ' + weather.low + '&deg;</h5>\n        <h5 class="daily-high">High ' + weather.high + '&deg;</h5>\n      </div>\n    ');
 	  });
 	  $('#daily').css('display', 'inherit');
 	};
