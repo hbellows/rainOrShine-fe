@@ -43,6 +43,7 @@ $(document).ready(() => {
 const eventListeners = () => {
   addFavorite()
   removeFavorite()
+  favoriteWeather()
 }
 
 const favoriteToggle = ()  => {
@@ -64,6 +65,12 @@ const removeFavorite = () => {
     deleteFavorite()
     favoriteToggle()
   })
+}
+
+const favoriteWeather = () => {
+  $('#favorites').click('.favorite-links', (event) => {
+    getCurrentWeather(event.target.id);
+  });
 }
 
 const getCurrentWeather = (location) => {
@@ -88,28 +95,23 @@ const displayCurrentWeather = () => {
   $("#current-summary").html('')
   $('#current-summary').append(`
   
-  <div class='favorite-btn'>
-    <div id='add-favorite'>
-      <button class='add-btn'>Add</button>
+    <div class='favorite-btn'>
+      <div id='add-favorite'>
+        <button class='add-btn'>Add</button>
+      </div>
+
+      <div id='remove-favorite' >
+        <button class='remove-btn'>Remove</button>
+      </div>
     </div>
 
-    <div id='remove-favorite' >
-      <button class='remove-btn'>Remove</button>
+    <div class="summary-left">
+      <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
+      <h4><span class="currently-time">${forecast.currentForecast().time_long}</span></h4>
+      <h4><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h4>
+      <h4><span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;</h4>
+      <h4><span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;</h4>
     </div>
-  </div>
-
-  <div class="summary-left">
-    <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
-    <h2><span class="currently-time">${forecast.currentForecast().time_long}</span></h2>
-  </div>
-  
-  <div class="summary-right">
-    <h2><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h2>
-    <h2>
-      <span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;
-      <span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;
-    </h2>
-  </div>
   `);
 
   $("#current-details").html('');
@@ -119,9 +121,6 @@ const displayCurrentWeather = () => {
         <h4><span id="Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h4>
         <h4><span id="Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h4>
         <h4><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h4>
-       </div>
-
-      <div class"details-right">
         <h4><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h4>
         <h4><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h4>
         <h4><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h4>
@@ -138,6 +137,7 @@ const displayHourlyWeather = () => {
     $('.hourly-container').append(`
       <div class='hourly-item'>
         <h5>${weather.time_short}</h5>
+        <h5>${weather.temp}&deg;</h5>
         <h5>${weather.summary}</h5>
       </div>
     `)
@@ -180,9 +180,9 @@ const displayFavorites = (response) => {
   
   favorites.forEach(function(location) {
     $('#favorites').append(`
-      <h3 id="favorite">${location.meta.data.id}</h3>
+      <a href="javascript:void(0)" class="favorite-links" id="${location.meta.data.id}">${location.meta.data.id}</a>
     `)
-  });
+  })
 }
 
 const postFavorite = () => {
