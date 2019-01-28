@@ -29,3 +29,5 @@ In addition to searching for weather forecasts, users can add and remove locatio
 ## How to Contribute
 Currently, I am the sole contributor to this project.  However, suggestions for improvements can be submitted by forking a copy of this repository and submitting a pull request.
 
+## Shout outs
+Big shout out to Erik Flowers who designed some really wonderful open source weather icons, which can be found here: https://github.com/erikflowers/weather-icons.
