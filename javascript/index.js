@@ -94,23 +94,27 @@ $('#location-search').on('click', function() {
 const displayCurrentWeather = () => {
   $("#current-summary").html('')
   $('#current-summary').append(`
-  
+
     <div class='favorite-btn'>
       <div id='add-favorite'>
         <button class='add-btn'>Add</button>
       </div>
-
       <div id='remove-favorite' >
         <button class='remove-btn'>Remove</button>
       </div>
     </div>
 
-    <div class="summary-left">
+    <div class="summary-right">
       <h2><span class="currently-location">${forecast.currentLocation()}</span></h2>
       <h4><span class="currently-time">${forecast.currentForecast().time_long}</span></h4>
       <h4><span id="currently-temperature">Now ${forecast.currentForecast().temp}</span>&deg;</h4>
       <h4><span id="currently-temperature">High ${forecast.dailyForecast()[0].high}</span>&deg;</h4>
       <h4><span id="currently-temperature">Low ${forecast.dailyForecast()[0].low}</span>&deg;</h4>
+    </div>
+    <div class="summary-left">
+      <span>
+      <i id="summary-icon" ${weatherIcons[forecast.currentForecast().icon]}" class="wi"></i> 
+      </span>
     </div>
   `);
 
@@ -118,9 +122,12 @@ const displayCurrentWeather = () => {
   $('#current-details').append(`
     <div class="details">
       <div class="details-left">
+          <i id="detail-icon" class="wi ${weatherIcons[forecast.currentForecast().icon]}"></i>
+      </div>
+      <div class="details-right">
+      <h4><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h4>
         <h4><span id="Sunrise">Sunrise ${forecast.dailyForecast()[0].sunrise}</span></h4>
         <h4><span id="Sunset">Sunset ${forecast.dailyForecast()[0].sunset}</span></h4>
-        <h4><span id="currently-summary">${forecast.dailyForecast()[0].summary}</span></h4>
         <h4><span id="currently-apparent-temperature">Feels Like ${forecast.currentForecast().feels_like}</span>&deg;</h4>
         <h4><span id="currently-humidity">Humdiity ${forecast.currentForecast().humidity}%</span></h4>
         <h4><span id="currently-uvIndex">UV Index ${forecast.currentForecast().uv_index}</span></h4>
@@ -137,8 +144,9 @@ const displayHourlyWeather = () => {
     $('.hourly-container').append(`
       <div class='hourly-item'>
         <h5>${weather.time_short}</h5>
-        <h5>${weather.temp}&deg;</h5>
+        <h1><i class="wi ${weatherIcons[weather.icon]}"></i></h1>
         <h5>${weather.summary}</h5>
+        <h5>${weather.temp}&deg;</h5>
       </div>
     `)
   })
@@ -150,11 +158,15 @@ const displayDailyWeather = () => {
   forecast.dailyForecast().forEach(function(weather) {
     $('#daily').append(`
       <div class="daily-container">
-        <h7 class="daily-day">${weather.day}</h7>
-        <h7 class="daily-summary">${weather.summary}</h7>
-        <h7 class="daily-precip">${weather.precip_prob}%</h7>
-        <h7 class="daily-low">Low ${weather.low}&deg;</h7>
-        <h7 class="daily-high">High ${weather.high}&deg;</h7>
+        <h5 class="daily-day">${weather.day}</h5>
+        <div class="daily-summary">
+          <i class="wi ${weatherIcons[weather.icon]}"></i><h5>${weather.summary}</h5>
+        </div>
+        <div class="daily-precip">
+          <i class="wi wi-raindrop"></i><h5>${weather.precip_prob}</h5>
+        </div>
+        <h5 class="daily-low">Low ${weather.low}&deg;</h5>
+        <h5 class="daily-high">High ${weather.high}&deg;</h5>
       </div>
     `)
   })
